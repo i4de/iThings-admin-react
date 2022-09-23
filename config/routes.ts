@@ -75,6 +75,18 @@ export default [
         ],
       },
       {
+        path: '/visualizeManagers',
+        name: '可视化',
+        icon: 'icon_system',
+        routes: [
+          {
+            name: '大屏',
+            path: '/visualizeManagers/largeScreen/index',
+            component: './visualizeManagers/largeScreen/index',
+          },
+        ],
+      },
+      {
         path: '/',
         redirect: '/deviceMangers/product/index',
       },
