@@ -78,6 +78,27 @@ export default [
         ],
       },
       {
+        path: '/logMangers',
+        name: '日志管理',
+        icon: 'icon_system',
+        access: 'canAdmin',
+        routes: [
+          {
+            name: '操作日志',
+            path: '/logMangers/operation/index',
+            component: './logMangers/operation/index',
+          },
+          // {
+          //   name: '登录日志',
+          //   path: '/logMangers/role/index',
+          //   component: './logMangers/role/index',
+          // },
+          {
+            component: '404',
+          },
+        ],
+      },
+      {
         path: '/',
         redirect: '/deviceMangers/product/index',
       },
