@@ -3,12 +3,14 @@ import { timestampToDateStr } from '@/utils/date';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { Button, Space, Tag } from 'antd';
-import React, { useRef } from 'react';
+import { Button, Modal, Space, Tag } from 'antd';
+import React, { useRef, useState } from 'react';
 //import type { MenuListItem } from './types';
 
 const OperationLogList: React.FC = () => {
   // const { queryPage } = useGetTableList();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const actionRef = useRef<ActionType>();
   // type QueryProp = typeof postSystemMenuIndex;
@@ -31,6 +33,13 @@ const OperationLogList: React.FC = () => {
       operationTime: '182736176313',
     },
   ];
+
+  const onOpen = () => {
+    setIsModalOpen(true);
+  };
+  const onClose = () => {
+    setIsModalOpen(false);
+  };
 
   const columns: ProColumns<MenuListItem>[] = [
     {
@@ -124,7 +133,7 @@ const OperationLogList: React.FC = () => {
       dataIndex: 'option',
       valueType: 'option',
       render: () => (
-        <Button type="primary" onClick={() => {}}>
+        <Button type="primary" onClick={onOpen}>
           查看
         </Button>
       ),
@@ -158,6 +167,11 @@ const OperationLogList: React.FC = () => {
         pagination={false}
         size={'middle'}
       />
+      <Modal title="操作日志详情" visible={isModalOpen} onOk={onOpen} onCancel={onClose}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
     </PageContainer>
   );
 };
