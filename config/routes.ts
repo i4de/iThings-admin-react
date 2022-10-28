@@ -109,6 +109,26 @@ export default [
         ],
       },
       {
+        path: '/visualizations',
+        name: '可视化',
+        icon: 'icon_system',
+        routes: [
+          // {
+          //   name: '看板',
+          //   path: '/visualizations/view/index',
+          //   component: './visualizations/view/index',
+          // },
+          {
+            name: '大屏',
+            path: '/visualizations/screen/index',
+            component: './visualizations/screen/index',
+          },
+          {
+            component: '404',
+          },
+        ],
+      },
+      {
         path: '/',
         redirect: '/deviceMangers/product/index',
       },
