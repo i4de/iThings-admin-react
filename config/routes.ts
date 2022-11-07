@@ -124,6 +124,12 @@ export default [
             component: './visualizations/screen/index',
           },
           {
+            name: '大屏详情',
+            hideInMenu: true,
+            path: '/visualizations/screen/detail/:id',
+            component: './visualizations/screen/detail/index',
+          },
+          {
             component: '404',
           },
         ],

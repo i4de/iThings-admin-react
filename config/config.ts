@@ -12,6 +12,7 @@ export default defineConfig({
   publicPath: '/',
   dva: {
     hmr: true,
+    lazyLoad: true,
   },
   dynamicImport: {
     loading: '@ant-design/pro-layout/es/PageLoading',

@@ -1,0 +1,16 @@
+import { CreateComponentType } from '@/packages/index.d';
+import { PublicConfigClass } from '@/packages/public';
+import cloneDeep from 'lodash/cloneDeep';
+import { Decorates04Config } from './index';
+
+export const option = {
+  colors: ['#1dc1f5', '#1dc1f5'],
+  // 是否翻转
+  reverse: false,
+};
+
+export default class Config extends PublicConfigClass implements CreateComponentType {
+  public key = Decorates04Config.key;
+  public chartConfig = cloneDeep(Decorates04Config);
+  public option = cloneDeep(option);
+}

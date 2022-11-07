@@ -15,7 +15,23 @@ import { useRef } from 'react';
 const Screen: React.FC = () => {
   const actionRef = useRef<ActionType>();
 
+  // 编辑处理
+  const editHandle = (id: number) => window.open(`/visualizations/screen/detail/:${id}`);
+
+  // 增删改查选择
+  const selectHandler = (key: string, id: number) => {
+    switch (key) {
+      // case 'delete':
+      //   deleteHanlde(id);
+      //   break;
+      case 'edit':
+        editHandle(id);
+        break;
+    }
+  };
+
   const onClick: MenuProps['onClick'] = ({ key }) => {
+    window.open('http://192.168.0.108:3000/#/login');
     message.info(`Click on item ${key}`);
   };
 
@@ -102,7 +118,7 @@ const Screen: React.FC = () => {
     ),
     actions: [
       <Tooltip title="编辑" key="edit">
-        <EditOutlined />
+        <EditOutlined onClick={() => selectHandler('edit', item.id)} />
       </Tooltip>,
       <Dropdown overlay={menu} key="dropdown">
         <EllipsisOutlined />
@@ -154,6 +170,12 @@ const Screen: React.FC = () => {
           dataSource={screenList}
         />
       </div>
+      {/* <iframe
+        src="http://192.168.0.108:3000/#/login"
+        title="iframe Example 1"
+        width="1200"
+        height="800"
+      ></iframe> */}
     </PageContainer>
   );
 };
