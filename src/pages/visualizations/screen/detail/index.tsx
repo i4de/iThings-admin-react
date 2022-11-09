@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import useAside from './hooks/useAside';
 // import {loadAsyncComponent} from '@/utils/component'
 
+import { ConfigType } from '@/packages';
+import '@/styles/scrollStyle.less';
 import ChartsItemBox from './components/ChartsItemBox';
 import './index.less';
 
@@ -128,7 +130,11 @@ const ScreenDetail: React.FC = () => {
                 />
               </Sider>
               <Sider className="site-layout-background site-img" width={180}>
-                <ChartsItemBox menuOptions={itemBoxOptions} />
+                <div className="charts-box scroll-bar">
+                  {itemBoxOptions?.map((v) => (
+                    <ChartsItemBox menuOptionsItem={v} key={v?.key} />
+                  ))}
+                </div>
               </Sider>
             </aside>
           </section>

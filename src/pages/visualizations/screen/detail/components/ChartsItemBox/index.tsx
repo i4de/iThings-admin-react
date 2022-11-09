@@ -1,38 +1,47 @@
 import type { ConfigType } from '@/packages/index.d';
 import '@/styles/scrollStyle.less';
+import { CSSProperties, memo, useMemo } from 'react';
+import { useDrag } from 'react-dnd';
+
 import './index.less';
+
 const ChartsItemBox: React.FC<{
-  menuOptions: ConfigType[];
-}> = ({ menuOptions }) => {
-  // 拖拽处理
-  const dragStartHandle = () => {};
-  // 拖拽结束
-  const dragendHandle = () => {
-    // chartEditStore.setEditCanvas(EditCanvasTypeEnum.IS_CREATE, false);
-  };
+  menuOptionsItem: ConfigType;
+}> = ({ menuOptionsItem }) => {
+  const [{ isDragging }, drag] = useDrag({
+    // type: menuOptionsItem?.key,
+    item: { ...menuOptionsItem, type: menuOptionsItem?.key },
+    begin: () => {
+      console.log('start');
+    },
+    end: () => {
+      console.log('end');
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  const containerStyle: CSSProperties = useMemo(
+    () => ({
+      opacity: isDragging ? 0.4 : 1,
+      cursor: 'move',
+    }),
+    [isDragging],
+  );
 
   return (
-    <div className="charts-box scroll-bar">
-      {menuOptions.map((v, i) => (
-        <div
-          className="charts-item-box"
-          key={i}
-          draggable
-          onDragStart={(e) => dragStartHandle(e, v)}
-          onDragEnd={dragendHandle}
-        >
-          <div className="charts-item-box-header">
-            <div>123</div>
-            {/* <mac-os-control-btn :mini="true" :disabled="true"></mac-os-control-btn> */}
-            <div>{v?.title}</div>
-          </div>
-          <div className="charts-item-box-img">
-            <img src={v.image} />
-          </div>
-        </div>
-      ))}
+    <div className="charts-item-box">
+      <div className="charts-item-box-header">
+        <div>123</div>
+        {/* <mac-os-control-btn :mini="true" :disabled="true"></mac-os-control-btn> */}
+        <div>{menuOptionsItem?.title}</div>
+      </div>
+      <div className="charts-item-box-img" ref={drag} style={{ ...containerStyle }}>
+        <img src={menuOptionsItem.image} />
+      </div>
     </div>
   );
 };
 
-export default ChartsItemBox;
+export default memo(ChartsItemBox);
