@@ -1,21 +1,25 @@
-import { Breadcrumb, ConfigProvider, Layout, Menu, MenuProps } from 'antd';
-import zhCN from 'antd/es/locale/zh_CN';
+import { Layout, Menu, MenuProps } from 'antd';
 import { useEffect, useState } from 'react';
 import useAside from './hooks/useAside';
+// import {loadAsyncComponent} from '@/utils/component'
 
-const { Header, Content, Footer, Sider } = Layout;
+import ChartsItemBox from './components/ChartsItemBox';
+import './index.less';
+
+const { Header, Content, Sider } = Layout;
 
 const ScreenDetail: React.FC = () => {
   const { menuOptions, clickItemHandle, selectOptions, leftselectValue } = useAside();
 
   const [rightSelectValue, setRightSelectValue] = useState('');
+  const [itemBoxOptions, setItemBoxOptions] = useState([]);
   const [packages, setPackages] = useState<{
     [T: string]: any;
   }>({
     // 侧边栏
     menuOptions: [],
     // 当前选择
-    selectOptions: {},
+    selectOptions: [],
     // 分类归档
     categorys: {
       all: [],
@@ -57,6 +61,7 @@ const ScreenDetail: React.FC = () => {
       selectOptionsObj = categorys[val];
       break;
     }
+    setItemBoxOptions(selectOptionsObj);
     setPackages((pre) => ({ ...pre, selectOptions: selectOptionsObj }));
   };
 
@@ -93,44 +98,41 @@ const ScreenDetail: React.FC = () => {
 
   return (
     <>
-      <Header className="header">
+      <Header className="site-header">
         <div className="logo" />
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
       </Header>
-      <Content style={{ padding: '0 50px' }}>
-        <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-        <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
-          <Sider className="site-layout-background" width={100} style={{ display: 'flex' }}>
-            <Menu
-              mode="vertical"
-              selectedKeys={[leftselectValue]}
-              style={{ height: '100%' }}
-              items={menuOptions}
-              onClick={clickItemHandle}
-            />
-          </Sider>
-          <Sider className="site-layout-background" width={100}>
-            <Menu
-              mode="vertical"
-              selectedKeys={[rightSelectValue]}
-              style={{ height: '100%' }}
-              items={packages.categorysNum > 0 && packages.menuOptions}
-              onClick={rightClickItemHandle}
-            />
-          </Sider>
-          <Content style={{ padding: '0 24px', minHeight: 280 }}>
-            {' '}
-            <div>
-              <ConfigProvider locale={zhCN}>123</ConfigProvider>
-            </div>
-          </Content>
+      <Content>
+        <Layout className="site-layout-background">
+          <section>
+            <header className="site-layout-background">123</header>
+            <aside style={{ display: 'flex' }}>
+              <Sider className="site-layout-background" width={100}>
+                <Menu
+                  mode="vertical"
+                  selectedKeys={[leftselectValue]}
+                  style={{ height: '100%' }}
+                  items={menuOptions}
+                  onClick={clickItemHandle}
+                />
+              </Sider>
+              <Sider className="site-layout-background" width={100}>
+                <Menu
+                  mode="vertical"
+                  selectedKeys={[rightSelectValue]}
+                  style={{ height: '100%' }}
+                  items={packages.categorysNum > 0 && packages.menuOptions}
+                  onClick={rightClickItemHandle}
+                />
+              </Sider>
+              <Sider className="site-layout-background site-img" width={180}>
+                <ChartsItemBox menuOptions={itemBoxOptions} />
+              </Sider>
+            </aside>
+          </section>
+          <Content>123</Content>
         </Layout>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
     </>
   );
 };

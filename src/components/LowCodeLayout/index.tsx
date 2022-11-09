@@ -1,12 +1,17 @@
 import ScreenDetail from '@/pages/visualizations/screen/detail';
-import { Layout } from 'antd';
+import { ConfigProvider, Layout } from 'antd';
+import zhCN from 'antd/es/locale/zh_CN';
 import React from 'react';
 
 const LowCodeLayout: React.FC = () => {
   return (
-    <Layout>
-      <ScreenDetail />
-    </Layout>
+    <>
+      <ConfigProvider locale={zhCN}>
+        <Layout style={{ overflow: 'hidden' }}>
+          <ScreenDetail />
+        </Layout>
+      </ConfigProvider>
+    </>
   );
 };
 export default LowCodeLayout;

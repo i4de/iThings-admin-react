@@ -170,12 +170,6 @@ const Screen: React.FC = () => {
           dataSource={screenList}
         />
       </div>
-      {/* <iframe
-        src="http://192.168.0.108:3000/#/login"
-        title="iframe Example 1"
-        width="1200"
-        height="800"
-      ></iframe> */}
     </PageContainer>
   );
 };

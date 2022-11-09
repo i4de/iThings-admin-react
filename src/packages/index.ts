@@ -2,7 +2,15 @@ import { ChartList } from '@/packages/components/Charts/index';
 import { DecorateList } from '@/packages/components/Decorates/index';
 import { InformationList } from '@/packages/components/Informations/index';
 import { TableList } from '@/packages/components/Tables/index';
-import { PackagesCategoryEnum, PackagesType } from '@/packages/index.d';
+import {
+  ConfigType,
+  FetchComFlagType,
+  PackagesCategoryEnum,
+  PackagesType,
+} from '@/packages/index.d';
+
+// const configModules = import.meta.globEager("./components/**/config.ts")
+// const indexModules = import.meta.globEager("./components/**/index.tsx")
 
 // * 所有图表
 export const packagesList: PackagesType = {
@@ -10,4 +18,47 @@ export const packagesList: PackagesType = {
   [PackagesCategoryEnum.INFORMATIONS]: InformationList,
   [PackagesCategoryEnum.TABLES]: TableList,
   [PackagesCategoryEnum.DECORATES]: DecorateList,
+};
+
+/**
+ * * 获取目标组件配置信息
+ * @param targetData
+ */
+export const createComponent = async (targetData: ConfigType) => {
+  const { category, key } = targetData;
+  const chart = await import(`./components/${targetData.package}/${category}/${key}/config.ts`);
+  return new chart.default();
+};
+
+/**
+ * * 获取组件
+ * @param {string} chartName 名称
+ * @param {FetchComFlagType} flag 标识 0为展示组件, 1为配置组件
+ */
+const fetchComponent = () => {
+  // const module = flag === FetchComFlagType.VIEW ? indexModules: configModules
+  // for (const key in module) {
+  //   const urlSplit = key.split('/')
+  //   if(urlSplit[urlSplit.length -2 ] === chartName) {
+  //     return module[key]
+  //   }
+  // }
+};
+
+/**
+ * * 获取展示组件
+ * @param {ConfigType} dropData 配置项
+ */
+export const fetchChartComponent = (dropData: ConfigType) => {
+  const { key } = dropData;
+  return fetchComponent(key, FetchComFlagType.VIEW)?.default;
+};
+
+/**
+ * * 获取配置组件
+ * @param {ConfigType} dropData 配置项
+ */
+export const fetchConfigComponent = (dropData: ConfigType) => {
+  const { key } = dropData;
+  return fetchComponent(key, FetchComFlagType.CONFIG)?.default;
 };
