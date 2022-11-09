@@ -96,6 +96,8 @@ const ScreenDetail: React.FC = () => {
     setRightSelectValue(menuOptionsArr[0]['key']);
   }, [selectOptions, Object.keys(packages?.categorys).length]);
 
+  console.log(packages);
+
   return (
     <>
       <Header className="site-header">
