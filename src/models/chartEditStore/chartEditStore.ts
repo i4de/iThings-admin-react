@@ -112,12 +112,6 @@ const chartEditStoreModel = {
   },
   reducers: {
     setEditCanvas(state, { payload }) {
-      const a = {
-        ...state.editCanvas,
-        ...payload,
-      };
-      console.log(a);
-
       return {
         ...state.editCanvas,
         ...payload,

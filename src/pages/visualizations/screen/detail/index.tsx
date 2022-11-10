@@ -6,6 +6,8 @@ import useAside from './hooks/useAside';
 import { ConfigType } from '@/packages';
 import '@/styles/scrollStyle.less';
 import ChartsItemBox from './components/ChartsItemBox';
+import ContentEdit from './pages/contentEdit';
+
 import './index.less';
 
 const { Header, Content, Sider } = Layout;
@@ -138,7 +140,9 @@ const ScreenDetail: React.FC = () => {
               </Sider>
             </aside>
           </section>
-          <Content>123</Content>
+          <Content>
+            <ContentEdit />
+          </Content>
         </Layout>
       </Content>
     </>

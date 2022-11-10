@@ -12096,6 +12096,11 @@ mathml-tag-names@^2.1.3:
   resolved "https://registry.npmmirror.com/mathml-tag-names/-/mathml-tag-names-2.1.3.tgz#4ddadd67308e780cf16a47685878ee27b736a0a3"
   integrity sha512-APMBEanjybaPzUrfqU0IMU5I0AswKMH7k8OTLs0vvV4KZpExkTkY87nR/zpbuTPj+gARop7aGUbl11pnDfW6xg==
 
+mb-sketch-ruler@^1.2.0-dev.11:
+  version "1.2.0-dev.11"
+  resolved "https://registry.npmmirror.com/mb-sketch-ruler/-/mb-sketch-ruler-1.2.0-dev.11.tgz#edea29a8bad8a03e1db52958d8947d1c785f205e"
+  integrity sha512-htVJxrXEqdXgV6sqNlJWlwB3pHhgXdXOyDmOETyvxfR9kRVy1nTg9gY4PKZdpoyGXP3OmjnbRXkHf8bmTOgYjg==
+
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.npmmirror.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
@@ -14607,6 +14612,13 @@ raw-body@2.5.1:
     http-errors "2.0.0"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+ray-sketch-board@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/ray-sketch-board/-/ray-sketch-board-1.0.0.tgz#3d5379d3fec4ac6e0c343d16f39c86e8a05f10fd"
+  integrity sha512-OhZ5dHWlemVhggWy5b7qZ7ssxuJEO7B2ZfbED4cdjX6+fC9tKkSNQ44hLfGRNJjj7CTeyGIJrMdjiNQxKb9b6g==
+  dependencies:
+    classnames "^2.2.6"
 
 rc-align@^2.4.0:
   version "2.4.5"
