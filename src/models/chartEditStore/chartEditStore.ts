@@ -1,5 +1,6 @@
 import { defaultTheme, globalThemeJson } from '@/settings/chartThemes';
 import { previewScaleType, requestInterval, requestIntervalUnit } from '@/settings/designSetting';
+import { isArray, isString } from '@/utils/type';
 
 export enum EditCanvasTypeEnum {
   EDIT_LAYOUT_DOM = 'editLayoutDom',
@@ -113,8 +114,66 @@ const chartEditStoreModel = {
   reducers: {
     setEditCanvas(state, { payload }) {
       return {
-        ...state.editCanvas,
-        ...payload,
+        ...state,
+        [state.editCanvas.isCreate]: payload,
+      };
+    },
+    setTargetSelectChart(state, { payload }) {
+      // 重复选中
+      if (state.targetChart.selectId.find((e: string) => e === payload?.selectId)) return;
+
+      // 无 id 清空
+      if (!payload?.selectId) {
+        return {
+          ...state.targetChart,
+          selectId: [],
+        };
+      }
+      // 多选
+      if (payload?.push) {
+        const selectIdArr = state.targetChart.selectId;
+        // 字符串
+        if (isString(payload?.selectId)) {
+          selectIdArr.push(payload?.selectId);
+          return {
+            ...state.targetChart,
+            selectId: selectIdArr,
+          };
+        }
+        // 数组
+        if (isArray(payload?.selectId)) {
+          selectIdArr.push([...payload?.selectId]);
+          return {
+            ...state.targetChart,
+            selectId: selectIdArr,
+          };
+        }
+      } else {
+        // 字符串
+        if (isString(payload?.selectId)) {
+          return {
+            ...state.targetChart,
+            selectId: [payload?.selectId],
+          };
+        }
+        // 数组
+        if (isArray(payload?.selectId)) {
+          return {
+            ...state.targetChart,
+            selectId: payload?.selectId,
+          };
+        }
+      }
+    },
+    addComponentList(state, { payload }) {
+      const componentList = state.componentList;
+      console.log(state);
+      console.log(payload?.componentInstance);
+
+      componentList.push(payload?.componentInstance);
+      return {
+        ...state,
+        componentList,
       };
     },
   },

@@ -1,8 +1,8 @@
+import { DragKeyEnum } from '@/enums/editPageEnum';
 import { EditCanvasTypeEnum } from '@/models/chartEditStore/chartEditStore';
 import type { ConfigType } from '@/packages/index.d';
 import '@/styles/scrollStyle.less';
-import { CSSProperties, memo, useMemo } from 'react';
-import { useDrag } from 'react-dnd';
+import { memo } from 'react';
 import { useDispatch } from 'umi';
 
 import './index.less';
@@ -12,36 +12,25 @@ const ChartsItemBox: React.FC<{
 }> = ({ menuOptionsItem }) => {
   const setEditCanvasDispatch = useDispatch();
 
-  const [{ isDragging }, drag] = useDrag({
-    item: { ...menuOptionsItem, type: menuOptionsItem?.key },
-    begin: () => {
-      setEditCanvasDispatch({
-        type: 'chartEditStore/setEditCanvas',
-        payload: {
-          [EditCanvasTypeEnum.IS_CREATE]: true,
-        },
-      });
-    },
-    end: () => {
-      setEditCanvasDispatch({
-        type: 'chartEditStore/setEditCanvas',
-        payload: {
-          [EditCanvasTypeEnum.IS_CREATE]: false,
-        },
-      });
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
+  const dragStartHandle = (e) => {
+    // 将配置项绑定到拖拽属性上
+    e!.dataTransfer!.setData(DragKeyEnum.DRAG_KEY, JSON.stringify(menuOptionsItem));
+    setEditCanvasDispatch({
+      type: 'chartEditStore/setEditCanvas',
+      payload: {
+        [EditCanvasTypeEnum.IS_CREATE]: true,
+      },
+    });
+  };
 
-  const containerStyle: CSSProperties = useMemo(
-    () => ({
-      opacity: isDragging ? 0.4 : 1,
-      cursor: 'move',
-    }),
-    [isDragging],
-  );
+  const dragendHandle = () => {
+    setEditCanvasDispatch({
+      type: 'chartEditStore/setEditCanvas',
+      payload: {
+        [EditCanvasTypeEnum.IS_CREATE]: false,
+      },
+    });
+  };
 
   return (
     <div className="charts-item-box">
@@ -49,7 +38,7 @@ const ChartsItemBox: React.FC<{
         <div>123</div>
         <div>{menuOptionsItem?.title}</div>
       </div>
-      <div className="charts-item-box-img" ref={drag} style={{ ...containerStyle }}>
+      <div className="charts-item-box-img" onDragStart={dragStartHandle} onDragEnd={dragendHandle}>
         <img src={menuOptionsItem.image} />
       </div>
     </div>

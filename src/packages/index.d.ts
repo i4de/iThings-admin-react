@@ -117,11 +117,11 @@ export interface PublicConfigType {
   status: StatusType;
 }
 
-// export interface CreateComponentType extends PublicConfigType, requestConfig {
-//   key: string
-//   chartConfig: ConfigType
-//   option: GlobalThemeJsonType
-// }
+export interface CreateComponentType extends PublicConfigType, requestConfig {
+  key: string;
+  chartConfig: ConfigType;
+  option: GlobalThemeJsonType;
+}
 
 // 组件成组实例类
 export interface CreateComponentGroupType extends CreateComponentType {

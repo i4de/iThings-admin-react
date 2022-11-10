@@ -100,6 +100,11 @@ const ScreenDetail: React.FC = () => {
     setRightSelectValue(menuOptionsArr[0]['key']);
   }, [selectOptions, Object.keys(packages?.categorys).length]);
 
+  const arrType = [];
+  itemBoxOptions.forEach((v) => {
+    arrType.push(v.key);
+  });
+
   console.log(packages);
 
   return (
@@ -141,7 +146,7 @@ const ScreenDetail: React.FC = () => {
             </aside>
           </section>
           <Content>
-            <ContentEdit />
+            <ContentEdit itemBoxOptions={itemBoxOptions} allType={arrType} />
           </Content>
         </Layout>
       </Content>
