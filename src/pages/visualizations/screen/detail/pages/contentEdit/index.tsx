@@ -1,5 +1,8 @@
 // import SketchBoard from 'mb-sketch-ruler';
+import DynamicEngine from '@/components/DynamicEngine';
+import { chartColors } from '@/settings/chartThemes';
 import SketchBoard from 'ray-sketch-board';
+import { useSelector } from 'umi';
 import useDrag from './hooks/useDrag';
 
 const ContentEdit: React.FC<{ itemBoxOptions: any; allType: any }> = (
@@ -9,6 +12,7 @@ const ContentEdit: React.FC<{ itemBoxOptions: any; allType: any }> = (
   },
 ) => {
   const { mousedownHandleUnStop, dragHandle, dragoverHandle } = useDrag();
+  const { componentList, editCanvasConfig } = useSelector((state) => state.chartEditStore);
 
   return (
     <>
@@ -43,7 +47,17 @@ const ContentEdit: React.FC<{ itemBoxOptions: any; allType: any }> = (
                 backgroundSize: 'cover',
               }}
             >
-              123
+              {/* {componentList.map((v) => ( */}
+              {/* <DynamicEngine {...v.chartConfig} isTpl={false} type={v.package} /> */}
+              <DynamicEngine
+                chartKey={'VBarCommon'}
+                category={'Bars'}
+                type={'Charts'}
+                themeColor={chartColors[editCanvasConfig?.chartThemeColor]}
+                themeSetting={editCanvasConfig?.chartThemeSetting}
+                chartConfig={componentList[0]}
+              />
+              {/* ))} */}
             </div>
           </div>
         </div>

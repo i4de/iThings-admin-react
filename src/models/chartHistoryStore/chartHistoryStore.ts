@@ -68,24 +68,13 @@ const chartEditStoreModel = {
         [HistoryStackItemEnum.ACTION_TYPE]: HistoryActionTypeEnum.ADD,
         [HistoryStackItemEnum.TARGET_TYPE]: HistoryTargetTypeEnum.CHART,
       });
-      const backStackArr = state.backStack;
-      backStackArr.splice(0, state.backStack.length - editHistoryMax);
+
+      if (payload?.item instanceof Array) state.backStack = [...state.backStack, ...obj];
+      else state.backStack.push(obj);
+      state.backStack.splice(0, state.backStack.length - editHistoryMax);
       // 新动作需清空前进栈
       if (payload?.notClear) return;
       state.forwardStack = [];
-
-      if (payload?.item instanceof Array) {
-        return {
-          ...state.backStack,
-          ...obj,
-        };
-      } else {
-        backStackArr.push(obj);
-        return {
-          ...state,
-          backStack: backStackArr,
-        };
-      }
     },
   },
 };

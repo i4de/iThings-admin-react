@@ -2,7 +2,7 @@
 /**
  * 资源管理和加载
  */
-import { loadingError, loadingFinish, loadingStart } from '@/utils';
+// import { loadingError, loadingFinish, loadingStart } from '@/utils';
 import { LoadingManager, Texture, TextureLoader } from 'three';
 import { resources } from './Assets';
 export class Resources {
@@ -24,7 +24,7 @@ export class Resources {
     this.manager = new LoadingManager();
     // 开始加载
     this.manager.onStart = () => {
-      loadingStart();
+      // loadingStart();
     };
     // 加载完成
     this.manager.onLoad = () => {
@@ -32,11 +32,11 @@ export class Resources {
     };
     // 正在进行中
     this.manager.onProgress = () => {
-      loadingFinish();
+      // loadingFinish();
     };
 
     this.manager.onError = () => {
-      loadingError();
+      // loadingError();
       window['$message'].error('数据加载失败，请刷新重试！');
     };
   }

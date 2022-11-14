@@ -7,7 +7,7 @@ import {
   PartitionOutlined,
 } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'umi';
+import { useSelector } from 'umi';
 
 export type MenuOptionsType = {
   key: string;
@@ -18,16 +18,10 @@ export type MenuOptionsType = {
 
 const useAside = () => {
   const menuOptions: MenuOptionsType[] = [];
-  const packagesListDispatch = useDispatch();
+
   const { packagesList } = useSelector((state) => state.packagesStore);
   // 选中的对象值
   const [selectOptions, setSelectOptions] = useState<MenuOptionsType[]>([]);
-
-  useEffect(() => {
-    packagesListDispatch({
-      type: 'packagesStore/getPackagesList',
-    });
-  }, []);
 
   const packagesListObj = {
     [PackagesCategoryEnum.CHARTS]: {

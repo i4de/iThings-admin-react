@@ -113,10 +113,7 @@ const chartEditStoreModel = {
   },
   reducers: {
     setEditCanvas(state, { payload }) {
-      return {
-        ...state,
-        [state.editCanvas.isCreate]: payload,
-      };
+      state.editCanvas.isCreate = payload[EditCanvasTypeEnum.IS_CREATE];
     },
     setTargetSelectChart(state, { payload }) {
       // 重复选中
@@ -124,57 +121,37 @@ const chartEditStoreModel = {
 
       // 无 id 清空
       if (!payload?.selectId) {
-        return {
-          ...state.targetChart,
-          selectId: [],
-        };
+        state.targetChart.selectId = [];
+        return;
       }
+
       // 多选
       if (payload?.push) {
-        const selectIdArr = state.targetChart.selectId;
         // 字符串
         if (isString(payload?.selectId)) {
-          selectIdArr.push(payload?.selectId);
-          return {
-            ...state.targetChart,
-            selectId: selectIdArr,
-          };
+          state.targetChart.selectId.push(payload?.selectId);
+          return;
         }
         // 数组
         if (isArray(payload?.selectId)) {
-          selectIdArr.push([...payload?.selectId]);
-          return {
-            ...state.targetChart,
-            selectId: selectIdArr,
-          };
+          state.targetChart.selectId.push(...payload?.selectId);
+          return;
         }
       } else {
         // 字符串
         if (isString(payload?.selectId)) {
-          return {
-            ...state.targetChart,
-            selectId: [payload?.selectId],
-          };
+          state.targetChart.selectId = [payload?.selectId];
+          return;
         }
         // 数组
         if (isArray(payload?.selectId)) {
-          return {
-            ...state.targetChart,
-            selectId: payload?.selectId,
-          };
+          state.targetChart.selectId = payload?.selectId;
+          return;
         }
       }
     },
     addComponentList(state, { payload }) {
-      const componentList = state.componentList;
-      console.log(state);
-      console.log(payload?.componentInstance);
-
-      componentList.push(payload?.componentInstance);
-      return {
-        ...state,
-        componentList,
-      };
+      state.componentList.push(payload?.componentInstance);
     },
   },
 };

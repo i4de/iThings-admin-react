@@ -19,8 +19,8 @@ import {
 } from 'three';
 
 import gsap from 'gsap';
-import earthFragment from '../shaders/earth/fragment.fs?raw';
-import earthVertex from '../shaders/earth/vertex.vs?raw';
+// import earthFragment from '../shaders/earth/fragment.fs?raw';
+// import earthVertex from '../shaders/earth/vertex.vs?raw';
 import { flyArc } from '../Utils/arc';
 import {
   createAnimateLine,
@@ -197,8 +197,8 @@ export default class earth {
     const earth_material = new ShaderMaterial({
       // wireframe:true, // 显示模型线条
       uniforms: this.uniforms as any,
-      vertexShader: earthVertex,
-      fragmentShader: earthFragment,
+      // vertexShader: earthVertex,
+      // fragmentShader: earthFragment,
     });
 
     earth_material.needsUpdate = true;

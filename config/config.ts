@@ -11,6 +11,7 @@ export default defineConfig({
   antd: {},
   publicPath: '/',
   dva: {
+    immer: true,
     hmr: true,
     lazyLoad: true,
   },
