@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
+import { WinKeyboard } from '@/enums/editPageEnum';
 import { CreateComponentGroupType, CreateComponentType } from '@/packages';
 import type {
   GroupDeviceCreateListProps,
@@ -170,4 +171,23 @@ export const setComponentPosition = (
 ) => {
   x && (target.attr.x = x);
   y && (target.attr.y = y);
+};
+
+/**
+ * * 设置按下键盘按键的底部展示
+ * @param keyCode
+ * @returns
+ */
+export const setKeyboardDressShow = (keyCode?: number) => {
+  const code = new Map([[17, WinKeyboard.CTRL]]);
+
+  const dom = document.getElementById('keyboard-dress-show');
+  if (!dom) return;
+  if (!keyCode) {
+    dom.innerText = '';
+    return;
+  }
+  if (keyCode && code.has(keyCode)) {
+    dom.innerText = `按下了「${code.get(keyCode)}」键`;
+  }
 };

@@ -1,7 +1,5 @@
 import type { MenuDataItem, Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
-import { message } from 'antd';
-import { createLogger } from 'redux-logger';
 import { history } from 'umi';
 import { postSystemUserRead, postSystemUserResourceRead } from './services/iThingsapi/yonghuguanli';
 import { IconMap } from './utils/iconMap';
@@ -85,11 +83,11 @@ export async function getInitialState(): Promise<{
   };
 }
 
-export const dva = {
-  config: {
-    onAction: createLogger(),
-    onError(e: Error) {
-      message.error(e.message, 3);
-    },
-  },
-};
+// export const dva = {
+//   config: {
+//     onAction: createLogger(),
+//     onError(e: Error) {
+//       message.error(e.message, 3);
+//     },
+//   },
+// };

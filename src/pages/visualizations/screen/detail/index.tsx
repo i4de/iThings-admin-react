@@ -6,9 +6,9 @@ import useAside from './hooks/useAside';
 import { ConfigType } from '@/packages';
 import '@/styles/scrollStyle.less';
 import ChartsItemBox from './components/ChartsItemBox';
-import ContentEdit from './pages/contentEdit';
 
 import './index.less';
+import ContentConfigurations from './pages/ContentConfigurations';
 
 const { Header, Content, Sider } = Layout;
 
@@ -146,7 +146,7 @@ const ScreenDetail: React.FC = () => {
             </aside>
           </section>
           <Content>
-            <ContentEdit itemBoxOptions={itemBoxOptions} allType={arrType} />
+            <ContentConfigurations itemBoxOptions={itemBoxOptions} allType={arrType} />
           </Content>
         </Layout>
       </Content>

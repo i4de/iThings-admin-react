@@ -1,3 +1,8 @@
+interface Window {
+  // 键盘按键记录
+  $KeyboardActive?: { [T: string]: boolean };
+}
+
 declare module 'slash2';
 declare module '*.css';
 declare module '*.less';
@@ -19,6 +24,10 @@ declare module 'mockjs';
 declare module 'react-fittext';
 declare module 'bizcharts-plugin-slider';
 declare module 'ray-sketch-board';
+
+declare module 'react/jsx-runtime' {
+  export default any;
+}
 
 // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design Dedicated environment variable, please do not use it in your project.

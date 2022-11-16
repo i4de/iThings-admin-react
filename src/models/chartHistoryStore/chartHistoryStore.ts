@@ -65,12 +65,13 @@ const chartEditStoreModel = {
       const obj = Object.freeze({
         [HistoryStackItemEnum.ID]: new Date().getTime().toString(),
         [HistoryStackItemEnum.HISTORY_DATA]: payload?.item,
-        [HistoryStackItemEnum.ACTION_TYPE]: HistoryActionTypeEnum.ADD,
-        [HistoryStackItemEnum.TARGET_TYPE]: HistoryTargetTypeEnum.CHART,
+        [HistoryStackItemEnum.ACTION_TYPE]: payload?.actionType,
+        [HistoryStackItemEnum.TARGET_TYPE]: payload?.targetType,
       });
 
-      if (payload?.item instanceof Array) state.backStack = [...state.backStack, ...obj];
+      if (obj instanceof Array) state.backStack = [...state.backStack, ...obj];
       else state.backStack.push(obj);
+
       state.backStack.splice(0, state.backStack.length - editHistoryMax);
       // 新动作需清空前进栈
       if (payload?.notClear) return;

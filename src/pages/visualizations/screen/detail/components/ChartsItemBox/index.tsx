@@ -2,6 +2,7 @@ import { DragKeyEnum } from '@/enums/editPageEnum';
 import { EditCanvasTypeEnum } from '@/models/chartEditStore/chartEditStore';
 import type { ConfigType } from '@/packages/index.d';
 import '@/styles/scrollStyle.less';
+import omit from 'lodash/omit';
 import { memo } from 'react';
 import { useDispatch } from 'umi';
 
@@ -14,11 +15,15 @@ const ChartsItemBox: React.FC<{
 
   const dragStartHandle = (e) => {
     // 将配置项绑定到拖拽属性上
-    e!.dataTransfer!.setData(DragKeyEnum.DRAG_KEY, JSON.stringify(menuOptionsItem));
+    e!.dataTransfer!.setData(
+      DragKeyEnum.DRAG_KEY,
+      JSON.stringify(omit(menuOptionsItem, ['image'])),
+    );
     setEditCanvasDispatch({
       type: 'chartEditStore/setEditCanvas',
       payload: {
-        [EditCanvasTypeEnum.IS_CREATE]: true,
+        k: EditCanvasTypeEnum.IS_CREATE,
+        v: true,
       },
     });
   };
@@ -27,7 +32,8 @@ const ChartsItemBox: React.FC<{
     setEditCanvasDispatch({
       type: 'chartEditStore/setEditCanvas',
       payload: {
-        [EditCanvasTypeEnum.IS_CREATE]: false,
+        k: EditCanvasTypeEnum.IS_CREATE,
+        v: false,
       },
     });
   };
