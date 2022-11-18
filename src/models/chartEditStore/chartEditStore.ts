@@ -223,8 +223,9 @@ const chartEditStoreModel = {
 
       // 无 id 清空
       if (!payload?.selectId) {
+        console.log('1');
+
         state.targetChart.selectId = [];
-        return;
       }
 
       // 多选
@@ -232,23 +233,19 @@ const chartEditStoreModel = {
         // 字符串
         if (isString(payload?.selectId)) {
           state.targetChart.selectId.push(payload?.selectId);
-          return;
         }
         // 数组
         if (isArray(payload?.selectId)) {
           state.targetChart.selectId.push(...payload?.selectId);
-          return;
         }
       } else {
         // 字符串
         if (isString(payload?.selectId)) {
           state.targetChart.selectId = [payload?.selectId];
-          return;
         }
         // 数组
         if (isArray(payload?.selectId)) {
           state.targetChart.selectId = payload?.selectId;
-          return;
         }
       }
     },

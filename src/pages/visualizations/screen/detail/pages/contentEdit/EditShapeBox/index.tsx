@@ -48,9 +48,14 @@ const EditShapeBox: React.FC<{
 
   // 兼容多值场景，active实线
   useEffect(() => {
+    if (targetChart.selectId.length === 0) {
+      setSelect(false);
+      setHover(false);
+    }
+
     if (targetChart.selectId.find((e: string) => e === item.id) && targetChart.selectId)
       setSelect(true);
-  }, [targetChart.selectId]);
+  }, [targetChart.selectId.length]);
 
   // 计算当前选中目标,hover虚线
   useEffect(() => {

@@ -536,8 +536,6 @@ const useDrag = () => {
     e.preventDefault();
     e.stopPropagation();
     if (!editCanvas.isSelect) {
-      console.log(item.id);
-
       setDispatch({
         type: 'chartEditStore/setTargetHoverChart',
         payload: {
