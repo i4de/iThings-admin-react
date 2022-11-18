@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { WinKeyboard } from '@/enums/editPageEnum';
-import { CreateComponentGroupType, CreateComponentType } from '@/packages';
+import type { CreateComponentGroupType, CreateComponentType } from '@/packages/index.d';
 import type {
   GroupDeviceCreateListProps,
   GroupDeviceItem,
@@ -191,3 +191,11 @@ export const setKeyboardDressShow = (keyCode?: number) => {
     dom.innerText = `按下了「${code.get(keyCode)}」键`;
   }
 };
+
+/**
+ * 定时器
+ *
+ */
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const awaitHandle = () => sleep(0);

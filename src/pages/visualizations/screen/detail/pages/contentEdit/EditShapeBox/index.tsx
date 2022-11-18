@@ -4,11 +4,18 @@
 /* eslint-disable react/self-closing-comp */
 import DynamicEngine from '@/components/DynamicEngine';
 import { chartColors } from '@/settings/chartThemes';
-import { getBlendModeStyle } from '@/utils/styles';
+import {
+  animationsClass,
+  getBlendModeStyle,
+  getFilterStyle,
+  getTransformStyle,
+} from '@/utils/styles';
 import { useMemo } from 'react';
 import { useSelector } from 'umi';
 import useDrag from '../hooks/useDrag';
 import useStyle from '../hooks/useStyle';
+
+import './styles.less';
 
 const EditShapeBox: React.FC<{
   item: any;
@@ -24,9 +31,7 @@ const EditShapeBox: React.FC<{
 
   const { useComponentStyle, useSizeStyle, setPointStyle } = useStyle();
 
-  const { targetChart, editCanvasConfig, componentList } = useSelector(
-    (state) => state.chartEditStore,
-  );
+  const { targetChart, editCanvasConfig } = useSelector((state) => state.chartEditStore);
 
   const sizeStyle = useSizeStyle(item.attr);
 
@@ -51,23 +56,30 @@ const EditShapeBox: React.FC<{
     return item.id === targetChart.hoverId;
   }, []);
 
-  console.log(item);
-  console.log(componentList);
-
   return (
     <div
-      className="shape-box-mouseEvent"
+      className={`ithings-shape-box shape-box-mouseEvent ${item.status.lock ? 'lock' : ''} ${
+        item.status.hide ? 'hide' : ''
+      }`}
       style={{
         ...componentStyle,
         ...(getBlendModeStyle(item.styles) as any),
       }}
+      data-id={item.id}
+      key={item.id}
       onClick={(e) => mouseClickHandle(e, item)}
       onMouseDown={(e) => mousedownHandle(e, item)}
       onMouseEnter={(e) => mouseenterHandle(e, item)}
       onMouseLeave={(e) => mouseleaveHandle(e, item)}
-      // onMontextMenu={(e) => handleContextMenu(e, item, optionsHandle)}
     >
-      <div className={`ithings-shape-box ${item.status.lock} ${item.status.hide}`}>
+      <div
+        className={`edit-content-chart ${animationsClass(item.styles.animations)}`}
+        style={{
+          ...useSizeStyle(item.attr),
+          ...getFilterStyle(item.styles),
+          ...getTransformStyle(item.styles),
+        }}
+      >
         <DynamicEngine
           chartKey={item?.chartConfig?.chartKey}
           category={item?.chartConfig?.category}
@@ -76,16 +88,16 @@ const EditShapeBox: React.FC<{
           themeSetting={editCanvasConfig?.chartThemeSetting}
           chartConfig={item}
         />
-        {/* 锚点 */}
-        {select &&
-          pointList.map((point, index) => (
-            <div
-              className="`shape-point `"
-              style={setPointStyle(point, index, item.attr, cursorResize)}
-              onMouseDown={(e: MouseEvent) => mousePointHandle(e, point, item.attr)}
-            ></div>
-          ))}
       </div>
+      {/* 锚点 */}
+      {select &&
+        pointList.map((point, index) => (
+          <div
+            className={`shape-point  ${point}`}
+            style={setPointStyle(point, index, item.attr, cursorResize)}
+            onMouseDown={(e: MouseEvent) => mousePointHandle(e, point, item.attr)}
+          ></div>
+        ))}
       {/* 选中 */}
       <div className="shape-modal" style={{ ...sizeStyle }}>
         <div className={`shape-modal-select ${select ? 'active' : ''}`}></div>

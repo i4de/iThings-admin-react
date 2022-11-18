@@ -206,11 +206,17 @@ const chartEditStoreModel = {
     },
     // 图表数组（需存储给后端）
     componentList: [],
+
+    targetId: undefined,
   },
   reducers: {
     setEditCanvas(state, { payload }) {
       state.editCanvas[payload?.k] = payload?.v;
     },
+    setComponentListAttr(state, { payload }) {
+      state.componentList[0] = payload?.componentInstance;
+    },
+
     setTargetSelectChart(state, { payload }) {
       // 重复选中
       if (state.targetChart.selectId.find((e: string) => e === payload?.selectId)) return;
@@ -389,26 +395,29 @@ const chartEditStoreModel = {
         (state.targetChart.selectId.length && state.targetChart.selectId[0]) ||
         undefined;
       if (!targetId) {
-        return -1;
+        state.targetId = -1;
+        return;
       }
       const targetIndex = state.componentList.findIndex((e) => e.id === targetId);
 
       // 当前
       if (targetIndex !== -1) {
-        return targetIndex;
+        state.targetId = targetIndex;
+        return;
       } else {
         const length = state.componentList.length;
         for (let i = 0; i < length; i++) {
           if (state.componentList[i].isGroup) {
             for (const cItem of (state.componentList[i] as CreateComponentGroupType).groupList) {
               if (cItem.id === targetId) {
-                return i;
+                state.targetId = i;
               }
             }
           }
         }
       }
-      return -1;
+      state.targetId = -1;
+      return;
     },
 
     setTargetHoverChart(state, { payload }) {

@@ -1,8 +1,10 @@
+/* eslint-disable prefer-const */
+import { useEffect, useRef } from 'react';
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DragKeyEnum, MouseEventButton } from '@/enums/editPageEnum';
 import { createComponent } from '@/packages';
-import {
+import type {
   ConfigType,
   CreateComponentGroupType,
   CreateComponentType,
@@ -16,17 +18,28 @@ import {
   HistoryTargetTypeEnum,
 } from '@/models/chartHistoryStore/chartHistoryStore';
 import useContextMenu from '@/pages/visualizations/hooks/useContextMenu';
-import { setComponentPosition } from '@/utils/utils';
+import { awaitHandle, setComponentPosition } from '@/utils/utils';
 import cloneDeep from 'lodash/cloneDeep';
 import throttle from 'lodash/throttle';
-import uuid from 'react-uuid';
+import { uid } from 'uid';
 import { useDispatch, useSelector } from 'umi';
 
 const useDrag = () => {
   const setDispatch = useDispatch();
-  const { editCanvas, targetChart, editCanvasConfig, componentList } = useSelector(
+  const { editCanvas, targetChart, editCanvasConfig, componentList, targetId } = useSelector(
     (state) => state.chartEditStore,
   );
+
+  const targetIdRef = useRef(null);
+  const scaledRef = useRef(null);
+
+  useEffect(() => {
+    scaledRef.current = editCanvas?.scale;
+  }, [editCanvas?.scale]);
+
+  useEffect(() => {
+    if (targetId !== undefined) targetIdRef.current = targetId;
+  }, [targetId]);
 
   const { onClickOutSide } = useContextMenu();
 
@@ -51,7 +64,7 @@ const useDrag = () => {
 
       // 创建新图表组件
       const component: CreateComponentType = await createComponent(dropData);
-      const newComponent = { ...component, id: uuid() };
+      const newComponent = { ...component, id: uid() };
 
       setComponentPosition(
         newComponent,
@@ -112,7 +125,6 @@ const useDrag = () => {
 
   // * 框选
   const mousedownBoxSelect = (e: MouseEvent) => {
-    console.log('1');
     mousedownHandleUnStop(e);
 
     // 记录点击初始位置
@@ -259,7 +271,7 @@ const useDrag = () => {
   };
 
   // *  Click 事件, 松开鼠标触发
-  const mouseClickHandle = (
+  const mouseClickHandle = async (
     e: MouseEvent,
     item: CreateComponentType | CreateComponentGroupType,
   ) => {
@@ -290,7 +302,10 @@ const useDrag = () => {
   };
 
   // * 按下事件（包含移动事件）
-  const mousedownHandle = (e: MouseEvent, item: CreateComponentType | CreateComponentGroupType) => {
+  const mousedownHandle = async (
+    e: MouseEvent,
+    item: CreateComponentType | CreateComponentGroupType,
+  ) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -321,39 +336,42 @@ const useDrag = () => {
 
     // 记录图表初始位置和大小
     const targetMap = new Map();
-    targetChart.selectId.forEach((id) => {
-      const index = setDispatch({
+    targetChart.selectId.forEach(async (id) => {
+      setDispatch({
         type: 'chartEditStore/fetchTargetIndex',
         payload: {
           id,
         },
       });
-
-      if (index !== -1) {
-        const { x, y, w, h } = componentList[index].attr;
+      await awaitHandle();
+      if (targetIdRef.current !== -1) {
+        const { x, y, w, h } = componentList[targetIdRef.current].attr;
         targetMap.set(id, { x, y, w, h });
       }
     });
 
+    await awaitHandle();
     // 记录点击初始位置
-    const startX = e.screenX;
-    const startY = e.screenY;
+    const startX = e.nativeEvent.screenX;
+    const startY = e.nativeEvent.screenY;
 
     // 记录历史位置
     const prevComponentInstance: CreateComponentType | CreateComponentGroupType[] = [];
-    targetChart.selectId.forEach((id) => {
+    targetChart.selectId.forEach(async (id) => {
+      await awaitHandle();
       if (!targetMap.has(id)) return;
-
-      const index = setDispatch({
+      setDispatch({
         type: 'chartEditStore/fetchTargetIndex',
         payload: {
           id,
         },
       });
-
+      await awaitHandle();
       // 拿到初始位置数据
-      prevComponentInstance.push(cloneDeep(componentList[index]));
+      prevComponentInstance.push(cloneDeep(componentList[targetIdRef.current]));
     });
+
+    await awaitHandle();
 
     // 记录初始位置
     setDispatch({
@@ -367,7 +385,7 @@ const useDrag = () => {
     });
 
     // 移动-计算偏移量
-    const mousemove = throttle((moveEvent: MouseEvent) => {
+    const mousemove = throttle(async (moveEvent: MouseEvent) => {
       setDispatch({
         type: 'chartEditStore/setEditCanvas',
         payload: {
@@ -383,21 +401,27 @@ const useDrag = () => {
         },
       });
 
+      await awaitHandle();
+
       // 当前偏移量，处理 scale 比例问题
       const offsetX = (moveEvent.screenX - startX) / scale;
       const offsetY = (moveEvent.screenY - startY) / scale;
 
-      targetChart.selectId.forEach((id) => {
+      targetChart.selectId.forEach(async (id) => {
+        await awaitHandle();
         if (!targetMap.has(id)) return;
-        const index = setDispatch({
+        setDispatch({
           type: 'chartEditStore/fetchTargetIndex',
           payload: {
             id,
           },
         });
+        await awaitHandle();
         // 拿到初始位置数据
         const { x, y, w, h } = targetMap.get(id);
-        const componentInstance = componentList[index];
+        let componentInstance = componentList[targetIdRef.current];
+
+        await awaitHandle();
 
         let currX = Math.round(x + offsetX);
         let currY = Math.round(y + offsetY);
@@ -412,17 +436,32 @@ const useDrag = () => {
         // 基于右下角位置检测
         currX = currX > canvasWidth - distance ? canvasWidth - distance : currX;
         currY = currY > canvasHeight - distance ? canvasHeight - distance : currY;
+
+        let currObj = {
+          x: currX,
+          y: currY,
+        };
+
         if (componentInstance) {
-          componentInstance.attr = Object.assign(componentInstance.attr, {
-            x: currX,
-            y: currY,
-          });
+          componentInstance = {
+            ...componentInstance,
+            attr: { ...componentInstance.attr, ...currObj },
+          };
         }
+
+        await awaitHandle();
+
+        setDispatch({
+          type: 'chartEditStore/setComponentListAttr',
+          payload: {
+            componentInstance,
+          },
+        });
       });
       return;
     }, 20);
 
-    const mouseup = () => {
+    const mouseup = async () => {
       try {
         setDispatch({
           type: 'chartEditStore/setMousePosition',
@@ -440,19 +479,24 @@ const useDrag = () => {
             v: false,
           },
         });
+        await awaitHandle();
         // 加入历史栈
         if (prevComponentInstance.length) {
-          targetChart.selectId.forEach((id) => {
+          targetChart.selectId.forEach(async (id) => {
+            await awaitHandle();
             if (!targetMap.has(id)) return;
-
-            const index = setDispatch({
+            setDispatch({
               type: 'chartEditStore/fetchTargetIndex',
               payload: {
                 id,
               },
             });
+            await awaitHandle();
 
-            const curComponentInstance = componentList[index];
+            const curComponentInstance = componentList[targetIdRef.current];
+
+            await awaitHandle();
+
             // 找到记录的所选组件
             prevComponentInstance.forEach((preItem) => {
               if (preItem.id === id) {
@@ -489,8 +533,6 @@ const useDrag = () => {
     e: MouseEvent,
     item: CreateComponentType | CreateComponentGroupType,
   ) => {
-    console.log(item.id);
-
     e.preventDefault();
     e.stopPropagation();
     if (!editCanvas.isSelect) {

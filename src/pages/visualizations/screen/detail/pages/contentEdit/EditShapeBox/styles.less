@@ -1,0 +1,98 @@
+/* stylelint-disable selector-class-pattern */
+.ithings-shape-box {
+  position: absolute;
+  width: 0;
+  height: 0;
+  cursor: move;
+
+  /* 锚点 */
+  .shape-point {
+    position: absolute;
+    z-index: 1;
+    width: 7px;
+    height: 7px;
+    background-color: #fff;
+    border: 3px solid #51d6a9;
+    border-radius: 5px;
+    transform: translate(-40%, -30%);
+  }
+
+  .t {
+    width: 30px;
+    transform: translate(-50%, -50%);
+  }
+
+  .b {
+    width: 30px;
+    transform: translate(-50%, -30%);
+  }
+
+  .l,
+  .r {
+    height: 30px;
+  }
+
+  .r {
+    transform: translate(-20%, -50%);
+  }
+
+  .l {
+    transform: translate(-45%, -50%);
+  }
+
+  .rt,
+  .rb {
+    transform: translate(-30%, -30%);
+  }
+
+  /* 选中 */
+  .shape-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .shape-modal-select,
+    .shape-modal-change {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+
+    .shape-modal-select {
+      top: 2px;
+      left: 2px;
+      opacity: 0.1;
+    }
+
+    .active {
+      background-color: #51d6a9;
+    }
+
+    .shape-modal-change {
+      border: 2px solid #0000;
+    }
+
+    .selectActive,
+    .hoverActive {
+      border-color: #51d6a9;
+      border-width: 2px;
+    }
+
+    .hoverActive {
+      border-style: dotted;
+    }
+
+    .selectActive {
+      border-style: solid;
+    }
+  }
+}
+
+.lock {
+  cursor: default !important;
+}
+
+.hide {
+  display: none;
+}
