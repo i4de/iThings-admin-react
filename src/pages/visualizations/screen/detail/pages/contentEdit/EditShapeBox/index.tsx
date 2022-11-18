@@ -10,7 +10,7 @@ import {
   getFilterStyle,
   getTransformStyle,
 } from '@/utils/styles';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'umi';
 import useDrag from '../hooks/useDrag';
 import useStyle from '../hooks/useStyle';
@@ -37,24 +37,25 @@ const EditShapeBox: React.FC<{
 
   const componentStyle = useComponentStyle(item.attr, index);
 
+  const [hover, setHover] = useState(false);
+  const [select, setSelect] = useState(false);
+
   // 锚点
   const pointList = ['t', 'r', 'b', 'l', 'lt', 'rt', 'lb', 'rb'];
 
   // 光标朝向
   const cursorResize = ['n', 'e', 's', 'w', 'nw', 'ne', 'sw', 'se'];
 
-  // 兼容多值场景
-  const select = useMemo(() => {
-    const id = item.id;
-    if (item.status.lock) return false;
-    return targetChart.selectId.find((e: string) => e === id);
-  }, []);
+  // 兼容多值场景，active实线
+  useEffect(() => {
+    if (targetChart.selectId.find((e: string) => e === item.id) && targetChart.selectId)
+      setSelect(true);
+  }, [targetChart.selectId]);
 
-  // 计算当前选中目标
-  const hover = useMemo(() => {
-    if (item.status.lock) return false;
-    return item.id === targetChart.hoverId;
-  }, []);
+  // 计算当前选中目标,hover虚线
+  useEffect(() => {
+    if (item?.id === targetChart.hoverId && targetChart.hoverId) setHover(true);
+  }, [targetChart.hoverId]);
 
   return (
     <div
