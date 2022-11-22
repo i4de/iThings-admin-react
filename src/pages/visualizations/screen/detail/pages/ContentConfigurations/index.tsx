@@ -1,5 +1,6 @@
 import { Layout } from 'antd';
 import ContentEdit from '../contentEdit';
+import PageConfiguration from '../pageConfiguration';
 
 import './styles.less';
 
@@ -15,7 +16,16 @@ const ContentConfigurations: React.FC<{ itemBoxOptions: any; allType: any }> = (
         {/* 图表拖拽区域 */}
         <ContentEdit itemBoxOptions={itemBoxOptions} allType={allType}></ContentEdit>
       </Content>
-      <Sider collapsible width="300" collapsedWidth={20} reverseArrow></Sider>
+      {/* 页面配置 */}
+      <Sider
+        collapsible
+        width="350"
+        collapsedWidth={20}
+        reverseArrow
+        style={{ backgroundColor: '#232324' }}
+      >
+        <PageConfiguration />
+      </Sider>
     </Layout>
   );
 };

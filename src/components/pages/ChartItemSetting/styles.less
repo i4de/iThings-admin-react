@@ -1,0 +1,46 @@
+@leftWidth: 60px;
+
+.ithings-config-item-box {
+  position: relative;
+  display: flex;
+  margin: 20px 0;
+
+  .item-left {
+    width: @leftWidth;
+    margin-top: 4px;
+    margin-left: 10px;
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .item-right {
+    display: grid;
+    grid-column-gap: 10px;
+    width: calc(100% - @leftWidth);
+
+    .ant-input-number,
+    .color-select .ant-select-selector {
+      border-radius: 6px;
+    }
+  }
+}
+
+.ithings-setting-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 110px;
+  margin-bottom: 5px;
+  text-align: start;
+
+  .name {
+    margin-top: 2px;
+  }
+}
+
+/* 清除 Collapse内边距 */
+.ant-collapse-item {
+  .ant-collapse-content .ant-collapse-content-box,
+  .ant-collapse-header.ant-collapse-header-collapsible-only {
+    padding: 16px 2px;
+  }
+}

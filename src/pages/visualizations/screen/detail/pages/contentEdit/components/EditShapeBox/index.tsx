@@ -2,6 +2,9 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/self-closing-comp */
+
+// TODO: 多个图表的处理
+
 import DynamicEngine from '@/components/DynamicEngine';
 import { chartColors } from '@/settings/chartThemes';
 import {
@@ -12,8 +15,8 @@ import {
 } from '@/utils/styles';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'umi';
-import useDrag from '../hooks/useDrag';
-import useStyle from '../hooks/useStyle';
+import useDrag from '../../hooks/useDrag';
+import useStyle from '../../hooks/useStyle';
 
 import './styles.less';
 

@@ -1,8 +1,8 @@
 import { getFilterStyle } from '@/utils/styles';
 import { useMemo } from 'react';
 import { useSelector } from 'umi';
-import EditShapeBox from '../../EditShapeBox';
 import useDrag from '../../hooks/useDrag';
+import EditShapeBox from '../EditShapeBox';
 
 import './styles.less';
 

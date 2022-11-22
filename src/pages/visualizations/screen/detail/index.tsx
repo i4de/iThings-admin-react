@@ -8,7 +8,7 @@ import '@/styles/scrollStyle.less';
 import ChartsItemBox from './components/ChartsItemBox';
 
 import './index.less';
-import ContentConfigurations from './pages/ContentConfigurations';
+import ContentConfigurations from './pages/contentConfigurations';
 
 const { Header, Content, Sider } = Layout;
 

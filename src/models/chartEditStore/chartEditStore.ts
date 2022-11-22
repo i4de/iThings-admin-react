@@ -38,6 +38,7 @@ export enum EditCanvasConfigEnum {
   BACKGROUND_IMAGE = 'backgroundImage',
   SELECT_COLOR = 'selectColor',
   PREVIEW_SCALE_TYPE = 'previewScaleType',
+  FILTER_SHOW = 'filterShow',
 }
 
 export interface EditCanvasConfigType {
@@ -212,6 +213,9 @@ const chartEditStoreModel = {
   reducers: {
     setEditCanvas(state, { payload }) {
       state.editCanvas[payload?.k] = payload?.v;
+    },
+    setEditCanvasConfig(state, { payload }) {
+      state.editCanvasConfig[payload?.k] = payload?.v;
     },
     setComponentListAttr(state, { payload }) {
       state.componentList[0] = payload?.componentInstance;

@@ -1,0 +1,93 @@
+/* stylelint-disable at-rule-no-unknown */
+@uploadWidth: 255px;
+@uploadHeight: 110px;
+
+.page-form {
+  display: flex;
+  justify-content: space-between;
+
+  label {
+    color: #ffffffd1;
+  }
+}
+
+.background-control {
+  .label-text {
+    color: #ffffffd1;
+  }
+
+  .upload-box {
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+
+  .color-pick {
+    position: relative;
+    padding: 3px;
+    border: 1px solid #ffffff3d;
+    border-radius: 6px;
+    cursor: pointer;
+
+    .picker-height {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: @uploadWidth;
+      height: 25px;
+      color: #ffffffd1;
+      background-origin: content-box;
+      border-radius: 6px;
+    }
+
+    .color-set {
+      position: absolute;
+      left: -10px;
+    }
+  }
+
+  .color-select {
+    .ant-select-selector {
+      border-radius: 6px;
+    }
+  }
+
+  .clear-btn {
+    padding-right: 2.5em;
+    padding-left: 2.5em;
+    border-radius: 6px;
+  }
+
+  .preview-control {
+    width: @uploadWidth;
+  }
+
+  div.ant-upload.ant-upload-select.ant-upload-select-picture-card {
+    width: 100%;
+    height: 50%;
+
+    .upload-dragger {
+      width: @uploadWidth;
+      padding: 5px;
+    }
+
+    .upload-show {
+      width: '-webkit-fill-available';
+      height: @uploadHeight;
+      border-radius: 6px;
+    }
+
+    .upload-img {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        height: 150px;
+      }
+
+      .upload-desc {
+        padding: 10px 0;
+      }
+    }
+  }
+}
