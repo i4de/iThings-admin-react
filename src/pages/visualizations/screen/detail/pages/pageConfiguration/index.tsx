@@ -16,10 +16,20 @@ const PageConfiguration: React.FC = () => {
     CHART_DATA = 'chartData',
   }
 
+  //设置滚动条的样式
+  const renderThumb = ({ style, ...props }) => {
+    const thumbStyle = {
+      width: '6px',
+      backgroundColor: '#404043',
+      borderRadius: '6px',
+    };
+    return <div style={{ ...style, ...thumbStyle }} {...props} className="scroll-bar" />;
+  };
+
   return (
     <div className="ithings-content-box  bg-depth2 ithings-content-layers ithings-boderbox">
       <div className={'content'}>
-        <Scrollbars>
+        <Scrollbars renderThumbVertical={renderThumb}>
           {!targetChart.selectId.length ? (
             <>
               {/* 页面配置 */}

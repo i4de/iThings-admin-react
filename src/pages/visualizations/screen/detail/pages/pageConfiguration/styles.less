@@ -1,3 +1,10 @@
+/* stylelint-disable at-rule-no-unknown */
+
+@borderRadius: 6px;
+@colorStyle: #ffffffd1;
+@backgroundColorStyle: #ffffff1a;
+@borderColorStyle: #ffffff1a;
+
 .ithings-content-box {
   height: calc(100vh - 60px);
   margin: 1px;
@@ -45,4 +52,67 @@
 
 .go-boderbox {
   box-sizing: border-box;
+}
+
+/* 公共样式去除 */
+
+/* 正常背景色和边框色 */
+
+.ant-input-number,
+.ant-select:not(.ant-select-customize-input) .ant-select-selector,
+.ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector,
+.ant-btn.clear-btn {
+  background-color: @backgroundColorStyle;
+  border-color: @backgroundColorStyle;
+}
+
+/* 禁用时字体颜色 */
+
+.ant-select-disabled.ant-select:not(.ant-select-customize-input)
+  .ant-select-selector
+  .ant-select-selection-item,
+button.ant-btn.clear-btn > span {
+  color: #757576;
+}
+
+/* 固定圆角 */
+
+.radius,
+.ant-select-selector {
+  border-radius: @borderRadius !important;
+}
+
+/* 上传图片背景色 */
+
+.ant-upload.ant-upload-select.ant-upload-select-picture-card {
+  background-color: #252529;
+  border-radius: @borderRadius;
+}
+
+/* color picker去掉内边距 */
+
+.ant-popover-inner-content {
+  padding: 0;
+}
+
+/* select option的背景色 */
+
+.select-option {
+  background-color: #39393a;
+}
+
+/* 正常字体色 */
+
+.ant-select-selection-item,
+.ant-input-number-input-wrap,
+.ant-btn.clear-btn > span {
+  color: @colorStyle;
+}
+
+/* hover时的背景色和边框色 */
+
+.ant-btn.clear-btn:hover {
+  background-color: @backgroundColorStyle;
+  border-color: @borderColorStyle;
+  cursor: pointer;
 }

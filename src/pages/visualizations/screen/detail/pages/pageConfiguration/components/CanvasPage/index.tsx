@@ -1,21 +1,25 @@
 import imgSrc from '@/assets/images/canvas/noImage.png';
 import { EditCanvasConfigEnum } from '@/models/chartEditStore/chartEditStore';
 import { backgroundImageSize } from '@/settings/designSetting';
-import { ProFormDigit } from '@ant-design/pro-form';
-import { Button, Divider, message, Segmented, Select, Space, Tabs, Typography, Upload } from 'antd';
+import {
+  Button,
+  Divider,
+  InputNumber,
+  message,
+  Popover,
+  Select,
+  Space,
+  Tabs,
+  Tooltip,
+  Typography,
+  Upload,
+} from 'antd';
 import type { RcFile, UploadProps } from 'antd/es/upload/interface';
-import { ChromePicker } from 'react-color';
+import ReactGPicker from 'react-gcolor-picker';
 import { useDispatch, useSelector } from 'umi';
 
 import { StylesSetting } from '@/components/pages/ChartItemSetting';
-import { PreviewScaleEnum } from '@/enums/styleEnum';
-import {
-  AppleOutlined,
-  ColumnHeightOutlined,
-  ColumnWidthOutlined,
-  DragOutlined,
-  FullscreenOutlined,
-} from '@ant-design/icons';
+import { AppleOutlined, DownloadOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import ChartThemeColor from './components/ChartThemeColor';
 import './styles.less';
@@ -28,7 +32,7 @@ const Configuration: React.FC = () => {
 
   const [isShowColor, setIsShowColor] = useState(false);
   const [selectColorValue, setSelectColorValue] = useState(0);
-  const [segmentedValue, setSegmentedValue] = useState(PreviewScaleEnum.FIT);
+  // const [segmentedValue, setSegmentedValue] = useState(PreviewScaleEnum.FIT);
 
   // 默认应用类型
   const selectColorOptions = [
@@ -42,25 +46,25 @@ const Configuration: React.FC = () => {
     },
   ];
 
-  //预览切换
-  const previewTypeList = [
-    {
-      value: PreviewScaleEnum.FIT,
-      icon: <DragOutlined />,
-    },
-    {
-      value: PreviewScaleEnum.SCROLL_Y,
-      icon: <ColumnWidthOutlined />,
-    },
-    {
-      value: PreviewScaleEnum.SCROLL_X,
-      icon: <ColumnHeightOutlined />,
-    },
-    {
-      value: PreviewScaleEnum.FULL,
-      icon: <FullscreenOutlined />,
-    },
-  ];
+  // //预览切换
+  // const previewTypeList = [
+  //   {
+  //     value: PreviewScaleEnum.FIT,
+  //     icon: <DragOutlined />,
+  //   },
+  //   {
+  //     value: PreviewScaleEnum.SCROLL_Y,
+  //     icon: <ColumnWidthOutlined />,
+  //   },
+  //   {
+  //     value: PreviewScaleEnum.SCROLL_X,
+  //     icon: <ColumnHeightOutlined />,
+  //   },
+  //   {
+  //     value: PreviewScaleEnum.FULL,
+  //     icon: <FullscreenOutlined />,
+  //   },
+  // ];
 
   const chromeColorHandle = () => setIsShowColor(!isShowColor);
 
@@ -118,38 +122,56 @@ const Configuration: React.FC = () => {
     });
   };
 
+  // 计算宽高
+
+  const computedScaleHandle = (k: EditCanvasConfigEnum, v: number) => {
+    setDispatch({
+      type: 'chartEditStore/setEditCanvasConfig',
+      payload: {
+        k,
+        v,
+      },
+    });
+    setDispatch({
+      type: 'chartEditStore/computedScale',
+    });
+  };
+
+  const colorPickHandle = (color: string) =>
+    setDispatch({
+      type: 'chartEditStore/setEditCanvasConfig',
+      payload: {
+        k: EditCanvasConfigEnum.BACKGROUND,
+        v: color,
+      },
+    });
+
   return (
     <>
       {/*宽高*/}
       <section className="page-form">
-        <ProFormDigit
-          min={50}
-          label="宽度"
-          name="canvasWidth"
-          width="xs"
-          fieldProps={{
-            value: editCanvasConfig?.width,
-            disabled: editCanvas.lockScale,
-            onChange: () =>
-              setDispatch({
-                type: 'chartEditStore/computedScale',
-              }),
-          }}
-        />
-        <ProFormDigit
-          min={50}
-          label="高度"
-          name="canvasHidth"
-          width="xs"
-          fieldProps={{
-            value: editCanvasConfig?.height,
-            disabled: editCanvas.lockScale,
-            onChange: () =>
-              setDispatch({
-                type: 'chartEditStore/computedScale',
-              }),
-          }}
-        />
+        <Space size={30}>
+          <Text className="label-text n-text">宽度</Text>
+          <InputNumber
+            size="small"
+            min={50}
+            value={editCanvasConfig?.width}
+            onChange={(v) => computedScaleHandle(EditCanvasConfigEnum.WIDTH, v)}
+            placeholder="宽度"
+            disabled={editCanvas.lockScale}
+            className="radius"
+          />
+          <Text className="label-text n-text">高度</Text>
+          <InputNumber
+            size="small"
+            min={50}
+            value={editCanvasConfig?.height}
+            onChange={(v) => computedScaleHandle(EditCanvasConfigEnum.HEIGHT, v)}
+            placeholder="高度"
+            disabled={editCanvas.lockScale}
+            className="radius"
+          />
+        </Space>
       </section>
       {/*背景相关*/}
       <section className="background-control">
@@ -163,11 +185,8 @@ const Configuration: React.FC = () => {
             onChange={uploadHandle}
           >
             <div className="upload-dragger">
-              {/* {editCanvasConfig.backgroundImage && (
-                <img className="upload-show" src={editCanvasConfig.backgroundImage} alt="背景" />
-              )} */}
               <div className="upload-img">
-                <img src={imgSrc} className="upload-show" />
+                <img src={imgSrc} className="upload-show radius" />
                 <Text className="upload-desc">
                   背景图需小于 {backgroundImageSize}M ，格式为 png/jpg/gif 的文件
                 </Text>
@@ -178,54 +197,58 @@ const Configuration: React.FC = () => {
         <Space direction="vertical" size="middle">
           <Space>
             <Text className="label-text">背景颜色</Text>
-            <div className="color-pick">
-              <div
-                className="picker-height"
-                onClick={chromeColorHandle}
-                style={{ backgroundColor: editCanvasConfig.background }}
+            <div className="color-pick radius">
+              <Popover
+                content={
+                  <div className="color-set">
+                    {isShowColor && (
+                      <ReactGPicker
+                        value={editCanvasConfig.background}
+                        format="hex"
+                        onChange={colorPickHandle}
+                      />
+                    )}
+                  </div>
+                }
+                trigger="click"
+                placement="bottom"
               >
-                {editCanvasConfig.background || '#000'}
-              </div>
-              <div className="color-set">
-                {isShowColor && (
-                  <ChromePicker
-                    color={editCanvasConfig.background}
-                    onChangeComplete={(color) => {
-                      setDispatch({
-                        type: 'chartEditStore/setEditCanvasConfig',
-                        payload: {
-                          k: EditCanvasConfigEnum.BACKGROUND,
-                          v: `${color.hex}`,
-                        },
-                      });
-                    }}
-                  />
-                )}
-              </div>
+                <div
+                  className="picker-height radius"
+                  onClick={chromeColorHandle}
+                  style={{ backgroundColor: editCanvasConfig.background }}
+                >
+                  {editCanvasConfig.background || '#000'}
+                </div>
+              </Popover>
             </div>
           </Space>
           <Space>
             <Text className="label-text">应用类型</Text>
             <Select
+              size="small"
               className="color-select"
               style={{ width: '263px' }}
               disabled={!editCanvasConfig.backgroundImage}
               value={selectColorValue}
               onChange={selectHandle}
               options={selectColorOptions}
+              popupClassName="select-option"
             />
           </Space>
           <Space>
             <Text className="label-text">背景控制</Text>
             <Button
-              className="clear-btn"
+              size="small"
+              className="clear-btn radius"
               disabled={!editCanvasConfig.backgroundImage}
               onClick={clearImg}
             >
               清除背景
             </Button>
             <Button
-              className="clear-btn"
+              size="small"
+              className="clear-btn radius"
               disabled={!editCanvasConfig.backgroundImage}
               onClick={clearColor}
             >
@@ -234,12 +257,26 @@ const Configuration: React.FC = () => {
           </Space>
           <Space>
             <Text className="label-text">预览方式</Text>
-            <Segmented
+            <Space.Compact block>
+              <Tooltip title="自适应比例展示，页面会有留白">
+                <Button type="primary" icon={<DownloadOutlined />} disabled />
+              </Tooltip>
+              <Tooltip title="X轴铺满，Y轴自适应滚动">
+                <Button type="primary" icon={<DownloadOutlined />} disabled />
+              </Tooltip>
+              <Tooltip title="Y轴铺满，X轴自适应滚动">
+                <Button type="primary" icon={<DownloadOutlined />} disabled />
+              </Tooltip>
+              <Tooltip title="强行拉伸画面，填充所有视图">
+                <Button type="primary" icon={<DownloadOutlined />} disabled />
+              </Tooltip>
+            </Space.Compact>
+            {/* <Segmented
               value={segmentedValue}
               onChange={setSegmentedValue}
               options={previewTypeList}
               className="preview-control"
-            />
+            /> */}
           </Space>
         </Space>
       </section>

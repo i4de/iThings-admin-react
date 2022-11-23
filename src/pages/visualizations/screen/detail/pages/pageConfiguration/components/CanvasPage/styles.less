@@ -5,6 +5,7 @@
 .page-form {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 16px;
 
   label {
     color: #ffffffd1;
@@ -12,20 +13,24 @@
 }
 
 .background-control {
-  .label-text {
-    color: #ffffffd1;
-  }
-
   .upload-box {
     margin-bottom: 20px;
     cursor: pointer;
+
+    .ant-upload-picture-card-wrapper.avatar-uploader {
+      width: 326px;
+    }
+
+    .upload-desc {
+      color: #ffffff85;
+    }
   }
 
   .color-pick {
     position: relative;
     padding: 3px;
+    background-color: #000;
     border: 1px solid #ffffff3d;
-    border-radius: 6px;
     cursor: pointer;
 
     .picker-height {
@@ -33,10 +38,9 @@
       align-items: center;
       justify-content: center;
       width: @uploadWidth;
-      height: 25px;
+      height: 20px;
       color: #ffffffd1;
       background-origin: content-box;
-      border-radius: 6px;
     }
 
     .color-set {
@@ -45,16 +49,9 @@
     }
   }
 
-  .color-select {
-    .ant-select-selector {
-      border-radius: 6px;
-    }
-  }
-
   .clear-btn {
     padding-right: 2.5em;
     padding-left: 2.5em;
-    border-radius: 6px;
   }
 
   .preview-control {
@@ -73,7 +70,6 @@
     .upload-show {
       width: '-webkit-fill-available';
       height: @uploadHeight;
-      border-radius: 6px;
     }
 
     .upload-img {
@@ -90,4 +86,8 @@
       }
     }
   }
+}
+
+.label-text {
+  color: #ffffffd1;
 }

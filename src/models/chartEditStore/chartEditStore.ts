@@ -1,15 +1,12 @@
 import { MenuEnum } from '@/enums/editPageEnum';
 import { StorageEnum } from '@/enums/storageEnum';
-import { PreviewScaleEnum } from '@/enums/styleEnum';
+import type { PreviewScaleEnum } from '@/enums/styleEnum';
 import type { CreateComponentGroupType, FilterEnum } from '@/packages/index.d';
-import {
-  ChartColorsNameType,
-  defaultTheme,
-  globalThemeJson,
-  GlobalThemeJsonType,
-} from '@/settings/chartThemes';
+import type { ChartColorsNameType, GlobalThemeJsonType } from '@/settings/chartThemes';
+import { defaultTheme, globalThemeJson } from '@/settings/chartThemes';
 import { previewScaleType, requestInterval, requestIntervalUnit } from '@/settings/designSetting';
-import { SettingStoreEnums, systemSetting, ToolsStatusEnum } from '@/settings/systemSetting';
+import type { SettingStoreEnums, ToolsStatusEnum } from '@/settings/systemSetting';
+import { systemSetting } from '@/settings/systemSetting';
 import { getLocalStorage } from '@/utils/storage';
 import { isArray, isString } from '@/utils/type';
 import { message } from 'antd';
