@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'umi';
 
 import { StylesSetting } from '@/components/pages/ChartItemSetting';
 import { PreviewScaleEnum } from '@/enums/styleEnum';
+import { fileToUrl } from '@/utils/utils';
 import {
   AppleOutlined,
   ColumnHeightOutlined,
@@ -101,7 +102,34 @@ const Configuration: React.FC = () => {
     return isJpgOrPng && isLt;
   };
 
-  const uploadHandle: UploadProps['onChange'] = () => {};
+  // 自定义上传操作
+  const customRequest: UploadProps['customRequest'] = (options) => {
+    const { file } = options;
+    console.log(file);
+
+    if (file) {
+      const ImageUrl = fileToUrl(file as RcFile);
+      console.log(ImageUrl);
+
+      setDispatch({
+        type: 'chartEditStore/setEditCanvasConfig',
+        payload: {
+          k: EditCanvasConfigEnum.BACKGROUND_IMAGE,
+          v: ImageUrl,
+        },
+      });
+      setDispatch({
+        type: 'chartEditStore/setEditCanvasConfig',
+        payload: {
+          k: EditCanvasConfigEnum.SELECT_COLOR,
+          v: false,
+        },
+      });
+    } else {
+      message.error('添加图片失败，请稍后重试！');
+    }
+  };
+
   const selectHandle = (v: number) => setSelectColorValue(v);
 
   // 清除颜色
@@ -203,15 +231,19 @@ const Configuration: React.FC = () => {
             className="avatar-uploader"
             showUploadList={false}
             beforeUpload={beforeUpload}
-            onChange={uploadHandle}
+            customRequest={customRequest}
           >
             <div className="upload-dragger">
-              <div className="upload-img">
-                <img src={imgSrc} className="upload-show radius" />
-                <Text className="upload-desc">
-                  背景图需小于 {backgroundImageSize}M ，格式为 png/jpg/gif 的文件
-                </Text>
-              </div>
+              {editCanvasConfig.backgroundImage ? (
+                <img className="upload-show" src={editCanvasConfig.backgroundImage} alt="背景" />
+              ) : (
+                <div className="upload-img">
+                  <img src={imgSrc} className="upload-show radius" />
+                  <Text className="upload-desc">
+                    背景图需小于 {backgroundImageSize}M ，格式为 png/jpg/gif 的文件
+                  </Text>
+                </div>
+              )}
             </div>
           </Upload>
         </div>

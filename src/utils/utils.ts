@@ -6,6 +6,7 @@ import type {
   GroupDeviceItem,
 } from '@/pages/deviceMangers/group/types';
 import type { MenuListItem } from '@/pages/systemMangers/menu/types';
+import type { RcFile } from 'antd/lib/upload';
 import type { DEVICE_INFO } from './const';
 import { GUIDKEY, TOKENKEY } from './const';
 
@@ -199,3 +200,12 @@ export const setKeyboardDressShow = (keyCode?: number) => {
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const awaitHandle = () => sleep(0);
+
+/**
+ * * file转url
+ */
+export const fileToUrl = (file: RcFile): string => {
+  const Url = URL || window.URL || window.webkitURL;
+  const ImageUrl = Url.createObjectURL(file);
+  return ImageUrl;
+};
