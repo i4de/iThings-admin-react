@@ -57,7 +57,7 @@ const StylesSetting: React.FC<{
     <>
       {isGroup && (
         <>
-          <Divider n-divider style={{ margin: '10px 0' }} />
+          <Divider />
           <Tag color="warning"> 解散分组「 {isCanvas ? '滤镜' : '滤镜 / 变换'} 」也将消失!</Tag>
         </>
       )}

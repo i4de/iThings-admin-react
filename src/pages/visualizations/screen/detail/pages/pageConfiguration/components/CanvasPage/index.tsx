@@ -19,7 +19,14 @@ import ReactGPicker from 'react-gcolor-picker';
 import { useDispatch, useSelector } from 'umi';
 
 import { StylesSetting } from '@/components/pages/ChartItemSetting';
-import { AppleOutlined, DownloadOutlined } from '@ant-design/icons';
+import { PreviewScaleEnum } from '@/enums/styleEnum';
+import {
+  AppleOutlined,
+  ColumnHeightOutlined,
+  ColumnWidthOutlined,
+  DragOutlined,
+  FullscreenOutlined,
+} from '@ant-design/icons';
 import { useState } from 'react';
 import ChartThemeColor from './components/ChartThemeColor';
 import './styles.less';
@@ -32,7 +39,6 @@ const Configuration: React.FC = () => {
 
   const [isShowColor, setIsShowColor] = useState(false);
   const [selectColorValue, setSelectColorValue] = useState(0);
-  // const [segmentedValue, setSegmentedValue] = useState(PreviewScaleEnum.FIT);
 
   // 默认应用类型
   const selectColorOptions = [
@@ -47,24 +53,39 @@ const Configuration: React.FC = () => {
   ];
 
   // //预览切换
-  // const previewTypeList = [
-  //   {
-  //     value: PreviewScaleEnum.FIT,
-  //     icon: <DragOutlined />,
-  //   },
-  //   {
-  //     value: PreviewScaleEnum.SCROLL_Y,
-  //     icon: <ColumnWidthOutlined />,
-  //   },
-  //   {
-  //     value: PreviewScaleEnum.SCROLL_X,
-  //     icon: <ColumnHeightOutlined />,
-  //   },
-  //   {
-  //     value: PreviewScaleEnum.FULL,
-  //     icon: <FullscreenOutlined />,
-  //   },
-  // ];
+  const previewTypeList = [
+    {
+      key: PreviewScaleEnum.FIT,
+      icon: <DragOutlined />,
+      title: '自适应比例展示，页面会有留白',
+    },
+    {
+      key: PreviewScaleEnum.SCROLL_Y,
+      icon: <ColumnWidthOutlined />,
+      title: 'X轴铺满，Y轴自适应滚动',
+    },
+    {
+      key: PreviewScaleEnum.SCROLL_X,
+      icon: <ColumnHeightOutlined />,
+      title: 'Y轴铺满，X轴自适应滚动',
+    },
+    {
+      key: PreviewScaleEnum.FULL,
+      icon: <FullscreenOutlined />,
+      title: '强行拉伸画面，填充所有视图',
+    },
+  ];
+
+  // 选择预览方式
+  const selectPreviewType = (key: PreviewScaleEnum) => {
+    setDispatch({
+      type: 'chartEditStore/setEditCanvasConfig',
+      payload: {
+        k: EditCanvasConfigEnum.PREVIEW_SCALE_TYPE,
+        v: key,
+      },
+    });
+  };
 
   const chromeColorHandle = () => setIsShowColor(!isShowColor);
 
@@ -258,25 +279,18 @@ const Configuration: React.FC = () => {
           <Space>
             <Text className="label-text">预览方式</Text>
             <Space.Compact block>
-              <Tooltip title="自适应比例展示，页面会有留白">
-                <Button type="primary" icon={<DownloadOutlined />} disabled />
-              </Tooltip>
-              <Tooltip title="X轴铺满，Y轴自适应滚动">
-                <Button type="primary" icon={<DownloadOutlined />} disabled />
-              </Tooltip>
-              <Tooltip title="Y轴铺满，X轴自适应滚动">
-                <Button type="primary" icon={<DownloadOutlined />} disabled />
-              </Tooltip>
-              <Tooltip title="强行拉伸画面，填充所有视图">
-                <Button type="primary" icon={<DownloadOutlined />} disabled />
-              </Tooltip>
+              {previewTypeList.map((item) => (
+                <Tooltip title={item.title} key={item.key}>
+                  <Button
+                    icon={item.icon}
+                    style={{ width: '66px', height: '24px' }}
+                    size="small"
+                    onClick={() => selectPreviewType(item.key)}
+                    className="radius preview-btn"
+                  />
+                </Tooltip>
+              ))}
             </Space.Compact>
-            {/* <Segmented
-              value={segmentedValue}
-              onChange={setSegmentedValue}
-              options={previewTypeList}
-              className="preview-control"
-            /> */}
           </Space>
         </Space>
       </section>
@@ -284,7 +298,7 @@ const Configuration: React.FC = () => {
       <section className="len">
         <StylesSetting isCanvas={true} />
       </section>
-      <Divider />
+      <Divider style={{ margin: '0 0 16px 0' }} />
       <section>
         <Tabs
           size="small"

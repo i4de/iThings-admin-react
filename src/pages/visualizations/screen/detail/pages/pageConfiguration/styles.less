@@ -2,8 +2,9 @@
 
 @borderRadius: 6px;
 @colorStyle: #ffffffd1;
+@dividerStyle: #ffffff17;
 @backgroundColorStyle: #ffffff1a;
-@borderColorStyle: #ffffff1a;
+@borderColorStyle: #597ef7;
 
 .ithings-content-box {
   height: calc(100vh - 60px);
@@ -61,7 +62,8 @@
 .ant-input-number,
 .ant-select:not(.ant-select-customize-input) .ant-select-selector,
 .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector,
-.ant-btn.clear-btn {
+.ant-btn.clear-btn,
+.ant-btn.preview-btn {
   background-color: @backgroundColorStyle;
   border-color: @backgroundColorStyle;
 }
@@ -111,8 +113,44 @@ button.ant-btn.clear-btn > span {
 
 /* hover时的背景色和边框色 */
 
-.ant-btn.clear-btn:hover {
-  background-color: @backgroundColorStyle;
+.color-pick:hover,
+.ant-select-selector:hover,
+.ant-btn.preview-btn:hover {
   border-color: @borderColorStyle;
   cursor: pointer;
+}
+
+.ant-btn.clear-btn:hover {
+  border-color: @borderColorStyle;
+}
+
+/* 按钮样式清除 */
+.ant-btn[disabled].clear-btn[disabled]:hover {
+  background-color: @backgroundColorStyle;
+  border-color: @backgroundColorStyle;
+}
+
+/* collapse 样式 */
+
+.ant-collapse,
+.ant-collapse-content {
+  background-color: #232324;
+  border-color: #232324;
+}
+
+.ant-collapse-header-text,
+.anticon.anticon-right > svg,
+.ant-typography.item-left,
+.ant-typography.name {
+  color: @colorStyle;
+}
+
+.ant-collapse > .ant-collapse-item {
+  border-bottom: 0;
+}
+
+/* 分隔符 */
+
+.ant-divider {
+  background-color: @dividerStyle;
 }

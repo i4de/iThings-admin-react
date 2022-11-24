@@ -1,5 +1,5 @@
 import { Collapse, Divider } from 'antd';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 const { Panel } = Collapse;
 
@@ -12,7 +12,7 @@ const CollapseItem: React.FC<{
 
   return (
     <>
-      <Divider style={{ margin: '10px 0' }} />
+      <Divider style={{ margin: '16px 0 0 0' }} />
       <Collapse onChange={collapseHandle} accordion>
         <Panel header={name} key={name} extra={extraNode()} collapsible="header">
           {props.children}
