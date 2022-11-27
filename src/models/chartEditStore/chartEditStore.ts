@@ -392,6 +392,8 @@ const chartEditStoreModel = {
         payload?.id ||
         (state.targetChart.selectId.length && state.targetChart.selectId[0]) ||
         undefined;
+
+      console.log(targetId);
       if (!targetId) {
         state.targetId = -1;
         return;
