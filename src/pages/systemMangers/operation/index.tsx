@@ -1,8 +1,9 @@
 import { PROTABLE_OPTIONS, SEARCH_CONFIGURE } from '@/utils/const';
+
 import { timestampToDateStr } from '@/utils/date';
+import { ProDescriptions, ProTable } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
-import ProTable from '@ant-design/pro-table';
 import { Button, Modal, Space, Tag } from 'antd';
 import React, { useRef, useState } from 'react';
 //import type { MenuListItem } from './types';
@@ -11,9 +12,14 @@ const OperationLogList: React.FC = () => {
   // const { queryPage } = useGetTableList();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [recordList, setRecordList] = useState('');
   const actionRef = useRef<ActionType>();
   // type QueryProp = typeof postSystemMenuIndex;
+
+  const statusValueEnum = {
+    1: { text: '成功', status: 'Success' },
+    2: { text: '失败', status: 'Error' },
+  };
 
   //mock
   const operationLogList = [
@@ -100,10 +106,7 @@ const OperationLogList: React.FC = () => {
       filters: true,
       onFilter: true,
       valueType: 'select',
-      valueEnum: {
-        1: { text: '成功', status: 'Success' },
-        2: { text: '失败', status: 'Error' },
-      },
+      valueEnum: statusValueEnum,
     },
 
     {
@@ -132,8 +135,14 @@ const OperationLogList: React.FC = () => {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      render: () => (
-        <Button type="primary" onClick={onOpen}>
+      render: (_, record) => (
+        <Button
+          type="primary"
+          onClick={() => {
+            setRecordList(record);
+            onOpen();
+          }}
+        >
           查看
         </Button>
       ),
@@ -152,7 +161,7 @@ const OperationLogList: React.FC = () => {
         success: true,
       });
     };
-
+  console.log(statusValueEnum?.[recordList?.status]);
   return (
     // TODO: 菜单目前只支持单条搜索结果
     <PageContainer>
@@ -168,9 +177,35 @@ const OperationLogList: React.FC = () => {
         size={'middle'}
       />
       <Modal title="操作日志详情" visible={isModalOpen} onOk={onOpen} onCancel={onClose}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <ProDescriptions column={2}>
+          <ProDescriptions.Item valueType="text" ellipsis label="操作模块">
+            {recordList?.systemModule}/{recordList?.type?.[0].name}
+          </ProDescriptions.Item>
+          <ProDescriptions.Item valueType="text" ellipsis label="请求地址">
+            {recordList?.systemModule}/{recordList?.type?.[0].name}
+          </ProDescriptions.Item>
+          <ProDescriptions.Item valueType="text" ellipsis label="登录信息">
+            {recordList?.operator}/{recordList?.ip}
+          </ProDescriptions.Item>
+          <ProDescriptions.Item valueType="text" ellipsis label="请求方式">
+            {recordList?.requestMethod}
+          </ProDescriptions.Item>
+          <ProDescriptions.Item span={2} valueType="code" ellipsis label="操作方法">
+            {recordList?.requestMethod}
+          </ProDescriptions.Item>
+          <ProDescriptions.Item span={2} valueType="code" ellipsis label="请求参数">
+            {recordList?.requestMethod}
+          </ProDescriptions.Item>
+          <ProDescriptions.Item span={2} valueType="code" ellipsis label="返回参数">
+            {recordList?.requestMethod}
+          </ProDescriptions.Item>
+          <ProDescriptions.Item valueType="text" ellipsis label="操作状态">
+            {statusValueEnum?.[recordList?.status]?.text}
+          </ProDescriptions.Item>
+          <ProDescriptions.Item valueType="dateTime" ellipsis label="操作时间">
+            {recordList?.operationTime}
+          </ProDescriptions.Item>
+        </ProDescriptions>
       </Modal>
     </PageContainer>
   );
