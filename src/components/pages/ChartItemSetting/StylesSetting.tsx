@@ -1,7 +1,9 @@
 import { EditCanvasConfigEnum } from '@/models/chartEditStore/chartEditStore';
 import { BlendModeEnumList, FilterEnum } from '@/packages/index.d';
+import { useTargetData } from '@/pages/visualizations/screen/detail/pages/pageConfiguration/hooks/useTargetData';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Divider, InputNumber, Select, Slider, Switch, Tag, Tooltip, Typography } from 'antd';
+import React from 'react';
 import { useDispatch, useSelector } from 'umi';
 import CollapseItem from './CollapseItem';
 import SettingItem from './SettingItem';
@@ -9,11 +11,13 @@ import SettingItemBox from './SettingItemBox';
 
 const { Text } = Typography;
 const StylesSetting: React.FC<{
-  isGroup?: boolean;
-  isCanvas: boolean;
-}> = ({ isGroup, isCanvas }) => {
+  isCanvas?: boolean;
+}> = ({ isCanvas }) => {
   const { editCanvasConfig } = useSelector((state) => state.chartEditStore);
   const setDispatch = useDispatch();
+  const { selectTarget } = useTargetData();
+
+  console.log(selectTarget);
 
   const switchHandle = (checked: boolean) => {
     setDispatch({
@@ -55,7 +59,7 @@ const StylesSetting: React.FC<{
 
   return (
     <>
-      {isGroup && (
+      {selectTarget?.isGroup && (
         <>
           <Divider />
           <Tag color="warning"> 解散分组「 {isCanvas ? '滤镜' : '滤镜 / 变换'} 」也将消失!</Tag>

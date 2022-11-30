@@ -211,11 +211,28 @@ const chartEditStoreModel = {
     setEditCanvas(state, { payload }) {
       state.editCanvas[payload?.k] = payload?.v;
     },
+
     setEditCanvasConfig(state, { payload }) {
       state.editCanvasConfig[payload?.k] = payload?.v;
     },
+
     setComponentListAttr(state, { payload }) {
       state.componentList[0] = payload?.componentInstance;
+    },
+
+    setChartConfig(state, { payload }) {
+      if (state.targetId === undefined || state.componentList.length === 0) return;
+      state.componentList[state.targetId].chartConfig[payload.key] = payload.value;
+    },
+
+    setChartAttr(state, { payload }) {
+      if (state.targetId === undefined || state.componentList.length === 0) return;
+      state.componentList[state.targetId].attr[payload.key] = payload.value;
+    },
+
+    setChartOption(state, { payload }) {
+      if (state.targetId === undefined || state.componentList.length === 0) return;
+      state.componentList[state.targetId].option[payload.key] = payload.value;
     },
 
     setTargetSelectChart(state, { payload }) {
@@ -393,7 +410,6 @@ const chartEditStoreModel = {
         (state.targetChart.selectId.length && state.targetChart.selectId[0]) ||
         undefined;
 
-      console.log(targetId);
       if (!targetId) {
         state.targetId = -1;
         return;

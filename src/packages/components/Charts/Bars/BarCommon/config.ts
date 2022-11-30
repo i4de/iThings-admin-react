@@ -1,4 +1,4 @@
-import { CreateComponentType } from '@/packages/index.d';
+import type { CreateComponentType } from '@/packages/index.d';
 import { echartOptionProfixHandle } from '@/packages/public/chart';
 import { PublicConfigClass } from '@/packages/public/publicConfig';
 import cloneDeep from 'lodash/cloneDeep';

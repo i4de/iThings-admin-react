@@ -105,6 +105,7 @@ const EditShapeBox: React.FC<{
             className={`shape-point  ${point}`}
             style={setPointStyle(point, index, item.attr, cursorResize)}
             onMouseDown={(e: MouseEvent) => mousePointHandle(e, point, item.attr)}
+            key={point}
           ></div>
         ))}
       {/* 选中 */}

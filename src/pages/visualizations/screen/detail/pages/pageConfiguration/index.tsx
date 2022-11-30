@@ -6,11 +6,15 @@ import {
   ToolOutlined,
 } from '@ant-design/icons';
 import { Tabs } from 'antd';
-import { useEffect, useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { useDispatch, useSelector } from 'umi';
+import CanvasPage from './components/CanvasPage';
+import ChartAnimation from './components/ChartAnimation';
+import ChartData from './components/ChartData';
+import ChartEvent from './components/ChartEvent';
+import ChartSetting from './components/ChartSetting';
 
-import { loadAsyncComponent } from '@/utils/components';
+import { useTargetData } from '@/pages/visualizations/screen/detail/pages/pageConfiguration/hooks/useTargetData';
 import './styles.less';
 
 export enum TabsEnum {
@@ -22,16 +26,16 @@ export enum TabsEnum {
 }
 
 const PageConfiguration: React.FC = () => {
-  const CanvasPage = loadAsyncComponent(() => import('./components/CanvasPage'));
-  const ChartSetting = loadAsyncComponent(() => import('./components/ChartSetting'));
-  const ChartData = loadAsyncComponent(() => import('./components/ChartData'));
-  const ChartEvent = loadAsyncComponent(() => import('./components/ChartEvent'));
-  const ChartAnimation = loadAsyncComponent(() => import('./components/ChartAnimation'));
-
-  const setDispatch = useDispatch();
-  const { targetChart, componentList, targetId } = useSelector((state) => state.chartEditStore);
+  // TODO: 异步懒加载组件处理样式问题
+  // const CanvasPage = loadAsyncComponent(() => import('./components/CanvasPage'))
+  // const ChartSetting = loadAsyncComponent(() => import('./components/ChartSetting'))
+  // const ChartData = loadAsyncComponent(() => import('./components/ChartData'))
+  // const ChartEvent = loadAsyncComponent(() => import('./components/ChartEvent'))
+  // const ChartAnimation = loadAsyncComponent(() => import('./components/ChartAnimation'))
 
   const tabsSelect = useRef<TabsEnum>(TabsEnum.CHART_SETTING);
+
+  const { selectTarget } = useTargetData(tabsSelect);
 
   //设置滚动条的样式
   const renderThumb = ({ style, ...props }) => {
@@ -67,7 +71,6 @@ const PageConfiguration: React.FC = () => {
     },
   ];
   const globalTab = globalTabList.map(renderTableItem);
-  console.log(globalTab);
 
   const chartsDefaultTabList = [
     {
@@ -102,26 +105,6 @@ const PageConfiguration: React.FC = () => {
   ];
 
   const chartsTab = chartsTabList.map(renderTableItem);
-
-  // 缓存targetId
-  const selectTarget = useMemo(() => {
-    const selectId = targetChart.selectId;
-    if (selectId.length !== 1) return undefined;
-    let target;
-    if (targetId !== undefined) {
-      target = componentList[targetId];
-    }
-    if (target?.isGroup) {
-      tabsSelect.current = TabsEnum.CHART_SETTING;
-    }
-    return target;
-  }, [targetChart, targetId, componentList]);
-
-  useEffect(() => {
-    setDispatch({
-      type: 'chartEditStore/fetchTargetIndex',
-    });
-  }, [setDispatch, targetChart]);
 
   return (
     <div className="ithings-content-box  bg-depth2 ithings-content-layers ithings-boderbox">

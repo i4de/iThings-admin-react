@@ -40,7 +40,7 @@ const EditRange: React.FC = () => {
       {/* 滤镜预览 */}
       <div style={{ ...rangeStyle, ...getFilterStyle(editCanvasConfig) }}>
         {componentList.length > 0 &&
-          componentList.map((item, index) => <EditShapeBox item={item} index={index} />)}
+          componentList.map((item, index) => <EditShapeBox item={item} index={index} key={item} />)}
       </div>
       {/* 水印 */}
       {/* 拖拽时的辅助线 */}
