@@ -13,6 +13,9 @@ import { Link, useLocation, useModel } from 'umi';
 import defaultSettings from '../../config/defaultSettings';
 import logo from '../../public/icons/logo/Group.png';
 
+// 引入动画
+import 'animate.css/animate.min.css';
+
 moment.locale('zh-cn');
 
 const BasicLayout: React.FC = (props) => {
