@@ -12715,6 +12715,18 @@ moment@^2.24.0, moment@^2.27.0, moment@^2.29.1, moment@^2.29.2, moment@^2.29.4:
   resolved "https://registry.npmmirror.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
+monaco-editor-webpack-plugin@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.npmmirror.com/monaco-editor-webpack-plugin/-/monaco-editor-webpack-plugin-6.0.0.tgz#628956ce1851afa2a5f6c88d0ecbb24e9a444898"
+  integrity sha512-vC886Mzpd2AkSM35XLkfQMjH+Ohz6RISVwhAejDUzZDheJAiz6G34lky1vyO8fZ702v7IrcKmsGwL1rRFnwvUA==
+  dependencies:
+    loader-utils "^2.0.0"
+
+monaco-editor@0.30.0:
+  version "0.30.0"
+  resolved "https://registry.npmmirror.com/monaco-editor/-/monaco-editor-0.30.0.tgz#1c7f9ba1d18c21868ce3a5413ef56351f9df7933"
+  integrity sha512-/k++/ofRmwnwWTpOWYOMGVcqBrqrlt3MP0Mt/cRTQojW7A9fnekcvPQ2iIFA0YSZdPWPN9yYXrYq0xqiUuxT/A==
+
 moo@^0.5.0:
   version "0.5.1"
   resolved "https://registry.npmmirror.com/moo/-/moo-0.5.1.tgz#7aae7f384b9b09f620b6abf6f74ebbcd1b65dbc4"
@@ -15734,6 +15746,13 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmmirror.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-monaco-editor@^0.49.0:
+  version "0.49.0"
+  resolved "https://registry.npmmirror.com/react-monaco-editor/-/react-monaco-editor-0.49.0.tgz#c5f0601dc0e3df07585560ed8de817c82d717334"
+  integrity sha512-KZTNn1vJh1rlzIRPXjr/5HWYMPfbOoDhR+prCR7mIQCssjlkn8+SfpN4lNsiCTECo/UdpnyAdqgaIyY3yYjVeg==
+  dependencies:
+    prop-types "^15.8.1"
 
 react-native-swipeout@^2.2.2:
   version "2.3.6"

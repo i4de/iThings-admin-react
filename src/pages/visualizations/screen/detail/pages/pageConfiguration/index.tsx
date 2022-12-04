@@ -94,13 +94,13 @@ const PageConfiguration: React.FC = () => {
       key: TabsEnum.CHART_DATA,
       title: '数据',
       icon: <ThunderboltOutlined />,
-      render: <ChartData />,
+      children: <ChartData />,
     },
     {
       key: TabsEnum.CHART_EVENT,
       title: '事件',
       icon: <SendOutlined />,
-      render: <ChartEvent />,
+      children: <ChartEvent />,
     },
   ];
 

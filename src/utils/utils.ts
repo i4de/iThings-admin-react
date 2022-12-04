@@ -6,7 +6,7 @@ import type {
   GroupDeviceItem,
 } from '@/pages/deviceMangers/group/types';
 import type { MenuListItem } from '@/pages/systemMangers/menu/types';
-import type { RcFile } from 'antd/lib/upload';
+import type { RcFile } from 'antd/lib/';
 import type { DEVICE_INFO } from './const';
 import { GUIDKEY, TOKENKEY } from './const';
 

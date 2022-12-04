@@ -105,11 +105,9 @@ const Configuration: React.FC = () => {
   // 自定义上传操作
   const customRequest: UploadProps['customRequest'] = (options) => {
     const { file } = options;
-    console.log(file);
 
     if (file) {
       const ImageUrl = fileToUrl(file as RcFile);
-      console.log(ImageUrl);
 
       setDispatch({
         type: 'chartEditStore/setEditCanvasConfig',

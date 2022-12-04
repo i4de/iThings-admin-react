@@ -1,12 +1,12 @@
 // 设置项布局
-// import SettingItem from './SettingItem'
-// import SettingItemBox from './SettingItemBox'
-// import CollapseItem from './CollapseItem'
+import CollapseItem from './CollapseItem';
+import SettingItem from './SettingItem';
+import SettingItemBox from './SettingItemBox';
 
 // 全局配置属性
 import GlobalSetting from './GlobalSetting';
 // // 全局配置属性-位置
-// import GlobalSettingPosition from './GlobalSettingPosition'
+import GlobalSettingPosition from './GlobalSettingPosition';
 
 // 名称
 import NameSetting from './NameSetting';
@@ -19,4 +19,14 @@ import StylesSetting from './StylesSetting';
 
 import './styles.less';
 
-export { StylesSetting, NameSetting, PositionSetting, SizeSetting, GlobalSetting };
+export {
+  StylesSetting,
+  NameSetting,
+  PositionSetting,
+  SizeSetting,
+  GlobalSetting,
+  SettingItem,
+  SettingItemBox,
+  CollapseItem,
+  GlobalSettingPosition,
+};

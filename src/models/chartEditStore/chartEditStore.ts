@@ -235,6 +235,10 @@ const chartEditStoreModel = {
       state.componentList[state.targetId].option[payload.key] = payload.value;
     },
 
+    setRequestGlobalConfig(state, { payload }) {
+      state.requestGlobalConfig[payload?.key] = payload?.value;
+    },
+
     setTargetSelectChart(state, { payload }) {
       // 重复选中
       if (state.targetChart.selectId.find((e: string) => e === payload?.selectId)) return;

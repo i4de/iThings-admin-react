@@ -9,6 +9,7 @@ export const useTargetData = (props?: any) => {
   const { targetChart, componentList, targetId } = useSelector((state) => state.chartEditStore);
 
   // 缓存targetId
+  // TODO: 在store中新增state值保存
   const selectTarget = useMemo(() => {
     const selectId = targetChart.selectId;
     if (selectId.length !== 1) return undefined;
