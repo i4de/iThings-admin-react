@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'umi';
 import { selectTimeOptions } from '../../../../index.d';
 import RequestGlobalHeaderTable from '../RequestGlobalHeaderTable';
 
-const Index: React.FC = () => {
+const RequestGlobalConfig: React.FC = () => {
   const setDispatch = useDispatch();
   const { requestGlobalConfig } = useSelector((state) => state.chartEditStore);
   const { requestOriginUrl, requestInterval, requestIntervalUnit } = requestGlobalConfig || {};
@@ -91,4 +91,4 @@ const Index: React.FC = () => {
     </Card>
   );
 };
-export default Index;
+export default RequestGlobalConfig;
