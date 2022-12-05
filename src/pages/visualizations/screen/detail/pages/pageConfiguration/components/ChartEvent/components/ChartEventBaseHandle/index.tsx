@@ -7,23 +7,13 @@ import { Button, Card, Collapse, Layout, message, Modal, Space, Tabs, Tag, Typog
 import React, { useEffect, useRef, useState } from 'react';
 import ValidationResult from '../ValidationResult';
 
+import useRenderTableItem from '@/hooks/useRenderTableItem';
+
+import type { renderTableItemProps } from '@/hooks/useRenderTableItem';
+
 const { Panel } = Collapse;
 const { Content, Sider } = Layout;
 const { Text } = Typography;
-
-// 渲染tabItem项
-const renderTableItem = (item) => {
-  return {
-    label: (
-      <div className="tabs-label n-text">
-        {item?.icon}
-        {item.title}
-      </div>
-    ),
-    key: item?.key,
-    children: item.children,
-  };
-};
 
 // 变量说明
 const VariableDescription = () => {
@@ -40,10 +30,12 @@ const VariableDescription = () => {
 const ChartEventBaseHandle: React.FC = () => {
   const { selectTarget } = useTargetData();
 
+  const { renderTableItem } = useRenderTableItem();
+
   const [showModal, setShowModal] = useState(false);
 
   // events 函数模板
-  const baseEventRef = useRef({ ...selectTarget?.events.baseEvent });
+  const baseEventRef = useRef<renderTableItemProps[]>({ ...selectTarget?.events.baseEvent });
   // 事件错误标识
   const errorFlagRef = useRef(false);
 
