@@ -18,8 +18,8 @@ const { Text } = Typography;
 // 变量说明
 const VariableDescription = () => {
   return (
-    <ScrollBar>
-      <Collapse className="ithings-px-3" defaultActiveKey={['1', '2']}>
+    <ScrollBar height={'500px'}>
+      <Collapse className="ithings-px-3" defaultActiveKey={['1']}>
         <Panel key={'1'} header={'mouseEvent'}>
           <Text>鼠标事件对象</Text>
         </Panel>
@@ -33,9 +33,9 @@ const ChartEventBaseHandle: React.FC = () => {
   const { renderTableItem } = useRenderTableItem();
 
   const [showModal, setShowModal] = useState(false);
-
   // events 函数模板
-  const baseEventRef = useRef<renderTableItemProps[]>({ ...selectTarget?.events.baseEvent });
+  const baseEventRef = useRef<renderTableItemProps[]>({ ...selectTarget?.events?.baseEvent });
+  console.log(baseEventRef);
   // 事件错误标识
   const errorFlagRef = useRef(false);
 
@@ -73,9 +73,7 @@ const ChartEventBaseHandle: React.FC = () => {
         return false;
       }
     });
-    return {
-      validEventsObj,
-    };
+    return validEventsObj;
   };
 
   const EventTypeName = {
@@ -98,7 +96,7 @@ const ChartEventBaseHandle: React.FC = () => {
     },
   ];
 
-  const baseEventContentTabList = baseEventRef.current.map((eventName) => ({
+  const baseEventContentTabList = Object.keys(baseEventRef.current)?.map((eventName) => ({
     key: eventName,
     title: `${EventTypeName[eventName]}-${eventName}`,
     children: (
@@ -111,7 +109,7 @@ const ChartEventBaseHandle: React.FC = () => {
         {/*编辑主体*/}
         <MonacoEditor
           height={'480px'}
-          value={baseEventRef.current[eventName]}
+          value={baseEventRef.current?.[eventName]}
           language={'javascript'}
         />
         {/*函数结束*/}
@@ -146,8 +144,10 @@ const ChartEventBaseHandle: React.FC = () => {
     closeShow();
   };
 
+  console.log(Object.keys(BaseEvent));
+
   useEffect(() => {
-    if (showModal) baseEventRef.current = { ...selectTarget.value.events.baseEvent };
+    if (showModal) baseEventRef.current = { ...selectTarget?.events?.baseEvent };
   }, [showModal]);
 
   // TODO: 封装一个code组件，仅仅用来展示code
@@ -155,6 +155,7 @@ const ChartEventBaseHandle: React.FC = () => {
   return (
     <>
       <Panel
+        collapsible="header"
         header="基础事件配置"
         key="1"
         extra={
@@ -165,7 +166,7 @@ const ChartEventBaseHandle: React.FC = () => {
       />
       <Card className="collapse-show-box">
         {/*函数体*/}
-        {Object.keys(BaseEvent).map((eventName) => (
+        {Object.values(BaseEvent).map((eventName) => (
           <div key={eventName}>
             <p>
               <span className="func-annotate">{`// ${EventTypeName[eventName]}`}</span>
@@ -188,11 +189,19 @@ const ChartEventBaseHandle: React.FC = () => {
         ))}
       </Card>
       {/*弹窗*/}
-      <Modal className="ithings-chart-data-monaco-editor" open={showModal}>
+      <Modal
+        centered
+        destroyOnClose
+        className="ithings-chart-data-monaco-editor"
+        open={showModal}
+        footer={null}
+        closable={false}
+        maskClosable={false}
+        width={1200}
+      >
         <Card
           bordered={false}
           size="small"
-          style={{ width: '1200px', height: '700px' }}
           title="基础事件编辑器"
           actions={[
             <div>

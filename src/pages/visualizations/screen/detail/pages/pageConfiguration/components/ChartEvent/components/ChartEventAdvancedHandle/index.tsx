@@ -70,7 +70,7 @@ const ChartEventAdvancedHandle: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   // events 函数模板
-  const advancedEventsRef = useRef({ ...selectTarget?.events.advancedEvents });
+  const advancedEventsRef = useRef({ ...selectTarget?.events?.advancedEvents });
   // 事件错误标识
   const errorFlagRef = useRef(false);
   // 编辑区域控制
@@ -178,7 +178,7 @@ const ChartEventAdvancedHandle: React.FC = () => {
         {/*编辑主体*/}
         <MonacoEditor
           height={'480px'}
-          value={advancedEventsRef.current[eventName]}
+          value={advancedEventsRef.current?.[eventName]}
           language={'javascript'}
         />
         {/*函数结束*/}
@@ -191,12 +191,13 @@ const ChartEventAdvancedHandle: React.FC = () => {
   const baseEventContentTab = baseEventContentTabList.map(renderTableItem);
 
   useEffect(() => {
-    if (showModal) advancedEventsRef.current = { ...selectTarget.value.events.advancedEvents };
+    if (showModal) advancedEventsRef.current = { ...selectTarget?.events?.advancedEvents };
   }, [showModal]);
 
   return (
     <>
       <Panel
+        collapsible="header"
         header="高级事件配置"
         key="2"
         extra={
@@ -207,7 +208,7 @@ const ChartEventAdvancedHandle: React.FC = () => {
       />
       <Card className="collapse-show-box">
         {/*函数体*/}
-        {Object.keys(EventLife).map((eventName) => (
+        {Object.values(EventLife).map((eventName) => (
           <div key={eventName}>
             <p>
               <span className="func-annotate">{`// ${EventLifeName[eventName]}`}</span>
@@ -230,11 +231,18 @@ const ChartEventAdvancedHandle: React.FC = () => {
         ))}
       </Card>
       {/*弹窗*/}
-      <Modal className="ithings-chart-data-monaco-editor" open={showModal}>
+      <Modal
+        centered
+        destroyOnClose
+        className="ithings-chart-data-monaco-editor"
+        open={showModal}
+        footer={null}
+        closable={false}
+        maskClosable={false}
+        width={1200}
+      >
         <Card
           bordered={false}
-          size="small"
-          style={{ width: '1200px', height: '700px' }}
           title="高级事件编辑器（配合源码使用）"
           actions={[
             <div key="d">

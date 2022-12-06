@@ -134,6 +134,14 @@ export interface PublicConfigType {
   };
   filter?: string;
   status: StatusType;
+  events: {
+    baseEvent: {
+      [K in BaseEvent]?: string;
+    };
+    advancedEvents: {
+      [K in EventLife]?: string;
+    };
+  };
 }
 
 export interface CreateComponentType extends PublicConfigType, requestConfig {

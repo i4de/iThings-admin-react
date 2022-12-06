@@ -11,12 +11,12 @@ const ChartEvent: React.FC = () => {
 
   return (
     <>
+      <Text>
+        组件id：
+        <Text>{selectTarget?.id}</Text>
+      </Text>
       {/*事件配置*/}
-      <Collapse className="ithings-mt-3" defaultActiveKey={['1', '2', '3']}>
-        <Text>
-          组件id：
-          <Text>{selectTarget?.id}</Text>
-        </Text>
+      <Collapse className="ithings-mt-3" defaultActiveKey={['1', '2']}>
         <ChartEventBaseHandle />
         <ChartEventAdvancedHandle />
       </Collapse>

@@ -14,7 +14,7 @@ const CollapseItem: React.FC<{
   return (
     <>
       <Divider style={{ margin: '16px 0 0 0' }} />
-      <Collapse onChange={collapseHandle} accordion defaultActiveKey={expanded ? name : ''}>
+      <Collapse onChange={collapseHandle} defaultActiveKey={expanded ? name : ''}>
         <Panel header={name} key={name} extra={extraNode?.()} collapsible="header">
           {props.children}
         </Panel>

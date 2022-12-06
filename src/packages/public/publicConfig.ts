@@ -5,12 +5,12 @@ import {
   RequestHttpEnum,
   RequestHttpIntervalEnum,
 } from '@/enums/httpEnum';
-import {
-  ChartFrameEnum,
+import type {
   CreateComponentGroupType,
   CreateComponentType,
   PublicConfigType,
 } from '@/packages/index.d';
+import { BaseEvent, ChartFrameEnum, EventLife } from '@/packages/index.d';
 import { chartInitConfig, groupTitle } from '@/settings/designSetting';
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -40,7 +40,6 @@ const requestConfig = {
 
 // 单实例类
 export class PublicConfigClass implements PublicConfigType {
-  // public id = getUUID()
   public isGroup = false;
   // 基本信息
   public attr = { ...chartInitConfig, zIndex: -1 };
@@ -83,6 +82,19 @@ export class PublicConfigClass implements PublicConfigType {
   public request = cloneDeep(requestConfig);
   // 数据过滤
   public filter = undefined;
+  // 事件
+  public events = {
+    baseEvent: {
+      [BaseEvent.ON_CLICK]: undefined,
+      [BaseEvent.ON_DBL_CLICK]: undefined,
+      [BaseEvent.ON_MOUSE_ENTER]: undefined,
+      [BaseEvent.ON_MOUSE_LEAVE]: undefined,
+    },
+    advancedEvents: {
+      [EventLife.VNODE_MOUNTED]: undefined,
+      [EventLife.VNODE_BEFORE_MOUNT]: undefined,
+    },
+  };
 }
 
 // 多选成组类
