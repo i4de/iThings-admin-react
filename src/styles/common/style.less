@@ -1,0 +1,155 @@
+@import './var';
+@import './format';
+@import './animation';
+@import './mixins/mixins';
+
+// 过度
+
+.ithings-transition {
+  transition: all 0.4s;
+}
+
+.ithings-transition-quick {
+  transition: all 0.2s;
+}
+
+.ithings-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ithings-flex-items-center {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.ithings-flex-no-wrap {
+  flex-wrap: nowrap !important;
+}
+
+.ithings-absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// cursor 小手
+
+.ithings-cursor-pointer {
+  cursor: pointer;
+}
+
+// IE盒模型
+
+.ithings-boderbox {
+  box-sizing: border-box;
+}
+
+// 毛玻璃
+
+.ithings-background-filter {
+  box-shadow: @--border-shadow;
+  backdrop-filter: @--filter-blur-base;
+
+  .fetch-bg-color('filter-color');
+}
+
+//
+//// 毛玻璃
+//
+.ithings-background-filter-shallow {
+  box-shadow: @--border-shadow;
+  backdrop-filter: @--filter-blur-base;
+
+  .fetch-bg-color('filter-color-shallow');
+}
+
+// 边框圆角
+
+.ithings-border-radius {
+  overflow: hidden;
+  border-radius: @--border-radius-base;
+}
+
+// 背景斑点需配合 @mixin background-image 使用
+
+.ithings-point-bg {
+  .fetch-theme-custom('background-color', 'background-color1');
+
+  background-size: 15px 15px, 15px 15px;
+}
+
+// 省略号
+
+.ithings-ellipsis-1 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+// class:m-1 => margin：1em
+// class:mt-1 => margin-top：1em
+// m-0|mt-0|mx-0|my-0|p-0|pt-0|...
+
+each(@spacing-types, .(@type, @typekey) {
+
+  //.m-1
+
+  each(@spacing-sizes, .(@size, @sizekey) {
+
+    .ithings-@{typekey}-@{sizekey} {
+        @{type}: @size * @spacing-base-size;
+    }
+
+  })
+
+  //.mx-1
+
+  each(@spacing-sizes, .(@size, @sizekey) {
+
+    .ithings-@{typekey}x-@{sizekey} {
+        @{type}-left: @size * @spacing-base-size;
+        @{type}-right: @size * @spacing-base-size;
+    }
+
+    .ithings-@{typekey}y-@{sizekey} {
+        @{type}-top: @size * @spacing-base-size;
+        @{type}-bottom: @size * @spacing-base-size;
+    }
+
+  })
+
+  //.mt-1
+
+  each(@spacing-directions, .(@direction, @directionkey) {
+
+    each(@spacing-sizes, .(@size, @sizekey) {
+
+      .ithings-@{typekey}@{directionkey}-@{sizekey} {
+
+          @{type}-@{direction}: @size * @spacing-base-size;
+      }
+
+    })
+
+  })
+
+  .ithings-@{typekey} {
+      @{type}: 0 !important;
+  }
+
+})
+
+
+.ithings-d-inline-block {
+  display: inline-block;
+}
+
+.ithings-d-block {
+  display: block;
+}

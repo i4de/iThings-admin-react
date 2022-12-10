@@ -3,6 +3,8 @@ import { ConfigProvider, Layout } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import React from 'react';
 
+import '@/styles/common/style.less';
+
 const LowCodeLayout: React.FC = () => {
   return (
     <>

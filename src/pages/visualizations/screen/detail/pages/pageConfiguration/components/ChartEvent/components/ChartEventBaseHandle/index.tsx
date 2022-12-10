@@ -11,6 +11,8 @@ import useRenderTableItem from '@/hooks/useRenderTableItem';
 
 import type { renderTableItemProps } from '@/hooks/useRenderTableItem';
 
+import '../styles.less';
+
 const { Panel } = Collapse;
 const { Content, Sider } = Layout;
 const { Text } = Typography;
@@ -21,7 +23,7 @@ const VariableDescription = () => {
     <ScrollBar height={'500px'}>
       <Collapse className="ithings-px-3" defaultActiveKey={['1']}>
         <Panel key={'1'} header={'mouseEvent'}>
-          <Text>鼠标事件对象</Text>
+          <Text className="text-typography">鼠标事件对象</Text>
         </Panel>
       </Collapse>
     </ScrollBar>
@@ -103,8 +105,8 @@ const ChartEventBaseHandle: React.FC = () => {
       <>
         {/*函数主体*/}
         <p className="ithings-pl-3">
-          <span className="func-keyword">async function &nbsp;&nbsp;</span>
-          <span className="func-keyNameWord">{`${eventName}(mouseEvent) & nbsp;&nbsp;{`}</span>
+          <span className="func-keyword">async function </span>
+          <span className="func-keyNameWord">{`${eventName}(mouseEvent) {`}</span>
         </p>
         {/*编辑主体*/}
         <MonacoEditor
@@ -204,11 +206,13 @@ const ChartEventBaseHandle: React.FC = () => {
           size="small"
           title="基础事件编辑器"
           actions={[
-            <div>
-              <Tag icon={<FileTextOutlined />}>说明</Tag>
-              <Text className="ithings-ml-2">编写方式同正常 JavaScript 写法</Text>
+            <div className="ithings-flex-items-center" key="say">
+              <Tag icon={<FileTextOutlined />} color="#51d6a929" className="say-tag">
+                说明
+              </Tag>
+              <Text className="ithings-ml-2 text">编写方式同正常 JavaScript 写法</Text>
             </div>,
-            <Space>
+            <Space key="save" className="save-event-space">
               <Button onClick={closeShow}>取消</Button>
               <Button type="primary" onClick={saveEvents}>
                 保存
@@ -232,11 +236,10 @@ const ChartEventBaseHandle: React.FC = () => {
             </Content>
             <Sider
               width={340}
-              collapsedWidth={50}
-              collapsible
+              collapsible={false}
               style={{ padding: '12px 12px 0px 12px', marginLeft: '3px' }}
             >
-              <Tabs size="small" centered animated items={baseEventSiderTab} />
+              <Tabs size="small" animated items={baseEventSiderTab} />
             </Sider>
           </Layout>
         </Card>

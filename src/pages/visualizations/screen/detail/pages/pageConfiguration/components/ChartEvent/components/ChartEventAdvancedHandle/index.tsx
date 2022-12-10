@@ -11,6 +11,8 @@ import { templateList } from './importTemplate';
 
 import useRenderTableItem from '@/hooks/useRenderTableItem';
 
+import '../styles.less';
+
 const { Panel } = Collapse;
 const { Content, Sider } = Layout;
 const { Text } = Typography;
@@ -18,27 +20,31 @@ const { Text } = Typography;
 // 变量说明
 const VariableDescription = () => {
   return (
-    <ScrollBar>
+    <ScrollBar height={'500px'}>
       <Collapse className="ithings-px-3" defaultActiveKey={['1', '2', '3', '4']}>
         <Panel key={'1'} header={'e'}>
-          <Text>触发对应生命周期事件时接收的参数</Text>
+          <Text className="text-typography">触发对应生命周期事件时接收的参数</Text>
         </Panel>
         <Panel key={'2'} header={'this'}>
-          <Text>图表组件实例</Text>
-          {['refs', 'setupState', 'ctx', 'props', '...'].map((prop) => (
-            <Tag className="ithings-m-l" key={prop}>
-              {prop}
-            </Tag>
-          ))}
+          <Text className="text-typography">图表组件实例</Text>
+          <div>
+            {['refs', 'setupState', 'ctx', 'props', '...'].map((prop) => (
+              <Tag className="ithings-m-l say-tag" key={prop} color="#51d6a929">
+                {prop}
+              </Tag>
+            ))}
+          </div>
         </Panel>
         <Panel key={'3'} header={'components'}>
-          <Text>当前大屏内所有组件的集合id 图表组件中的配置id，可以获取其他图表组件进行控制</Text>
+          <Text className="text-typography " color="#51d6a929">
+            当前大屏内所有组件的集合id 图表组件中的配置id，可以获取其他图表组件进行控制
+          </Text>
           <MonacoEditor height={'50vh'} value={`{\n  [id]: component\n}`} language={'typescript'} />
         </Panel>
         <Panel key={'4'} header={'node_modules'}>
-          <Text>以下是内置在代码环境中可用的包变量</Text>
+          <Text className="text-typography">以下是内置在代码环境中可用的包变量</Text>
           {Object.keys(npmPkgs || {}).map((pkg) => (
-            <Tag className="ithings-m-l" key={pkg}>
+            <Tag className="ithings-m-l say-tag" key={pkg} color="#51d6a929">
               {pkg}
             </Tag>
           ))}
@@ -50,7 +56,7 @@ const VariableDescription = () => {
 // 介绍案例
 const IntroduceTheCase = () => {
   return (
-    <ScrollBar>
+    <ScrollBar height={'500px'}>
       <Collapse className="ithings-px-3" defaultActiveKey={['1', '2', '3', '4']}>
         {templateList.map((item, index) => (
           <Panel key={index} header={`案例${index + 1}：${item.description}`}>
@@ -123,9 +129,7 @@ const ChartEventAdvancedHandle: React.FC = () => {
         return false;
       }
     });
-    return {
-      validEventsObj,
-    };
+    return validEventsObj;
   };
 
   // 新增事件
@@ -165,15 +169,15 @@ const ChartEventAdvancedHandle: React.FC = () => {
       children: <IntroduceTheCase />,
     },
   ];
-  const baseEventContentTabList = Object.keys(EventLife).map((eventName) => ({
+  const baseEventContentTabList = Object.values(EventLife).map((eventName) => ({
     key: eventName,
     title: `${EventLifeName[eventName]}-${eventName}`,
     children: (
       <>
         {/*函数名称*/}
         <p className="ithings-pl-3">
-          <span className="func-keyword">async function &nbsp;&nbsp;</span>
-          <span className="func-keyNameWord">{`${eventName}(e, components, echarts, node_modules)&nbsp;&nbsp;`}</span>
+          <span className="func-keyword">async function </span>
+          <span className="func-keyNameWord">{`${eventName}(e, components, echarts, node_modules) {`}</span>
         </p>
         {/*编辑主体*/}
         <MonacoEditor
@@ -197,6 +201,7 @@ const ChartEventAdvancedHandle: React.FC = () => {
   return (
     <>
       <Panel
+        style={{ marginTop: '24px' }}
         collapsible="header"
         header="高级事件配置"
         key="2"
@@ -245,13 +250,15 @@ const ChartEventAdvancedHandle: React.FC = () => {
           bordered={false}
           title="高级事件编辑器（配合源码使用）"
           actions={[
-            <div key="d">
-              <Tag icon={<FileTextOutlined />}>说明</Tag>
-              <Text className="ithings-ml-2">
+            <div className="ithings-flex-items-center" key="say">
+              <Tag icon={<FileTextOutlined />} color="#51d6a929" className="say-tag">
+                说明
+              </Tag>
+              <Text className="ithings-ml-2 text">
                 通过提供的参数可为图表增加定制化的tooltip、交互事件等等
               </Text>
             </div>,
-            <Space key="s">
+            <Space key="save" className="save-event-space">
               <Button onClick={closeShow}>取消</Button>
               <Button type="primary" onClick={saveEvents}>
                 保存
@@ -275,11 +282,10 @@ const ChartEventAdvancedHandle: React.FC = () => {
             </Content>
             <Sider
               width={340}
-              collapsedWidth={50}
-              collapsible
+              collapsible={false}
               style={{ padding: '12px 12px 0px 12px', marginLeft: '3px' }}
             >
-              <Tabs size="small" centered animated items={baseEventSiderTab} type="card" />
+              <Tabs size="small" centered animated items={baseEventSiderTab} />
             </Sider>
           </Layout>
         </Card>

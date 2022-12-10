@@ -1,0 +1,16 @@
+@import './config.less';
+@import '../theme.less';
+@import '../_dark.less';
+
+.themeify(@key; @target) {
+  background-color: @dark[filter-color];
+}
+
+//获取背景颜色
+.fetch-bg-color(@target) {
+  .themeify('background-color'; @target);
+}
+
+.fetch-theme-custom (@key; @value) {
+  .themeify(@key; @value);
+}

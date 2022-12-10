@@ -1,0 +1,55 @@
+body {
+  overflow: hidden;
+}
+
+* {
+  list-style: none;
+}
+
+// 大屏格式化样式
+
+.ant-btn {
+  border-radius: 6px;
+}
+
+.ant-card-head-title,
+.ant-tabs,
+.text {
+  color: #ffffffd1;
+}
+
+.text-typography {
+  color: #ffffff57;
+}
+
+.ant-collapse .ant-collapse-item {
+  border-top: 1px solid #ffffff17;
+
+  &:first-child {
+    border-top: 0;
+  }
+}
+
+.ant-divider-horizontal {
+  margin: 24px 0 0;
+}
+
+.ant-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  color: #ffffffd1;
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: break-word;
+  background-color: #18181c;
+  border-radius: 6px;
+  transition: color 0.3s var(--n-bezier), background-color 0.3s var(--n-bezier),
+    box-shadow 0.3s var(--n-bezier), border-color 0.3s var(--n-bezier);
+
+  &.ant-card-bordered {
+    border: 1px solid #ffffff17;
+  }
+}

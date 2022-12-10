@@ -8,13 +8,12 @@ const { Text } = Typography;
 const ValidationResult: React.FC<{ validEvents: () => Record<string, string>[] }> = ({
   validEvents,
 }) => {
-  console.log(validEvents());
   return (
     <ScrollBar height={'500px'}>
       <Collapse className="ithings-px-3" defaultActiveKey={['1', '2', '3']}>
         {validEvents().map((item) => (
           <Panel key={item.key} header={item.title}>
-            <Text>{item?.msg || '暂无'}</Text>
+            <Text className="text-typography">{item?.msg || '暂无'}</Text>
           </Panel>
         ))}
       </Collapse>

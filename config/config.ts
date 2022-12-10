@@ -3,6 +3,7 @@ import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
+
 const { REACT_APP_ENV } = process.env;
 
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
@@ -51,6 +52,21 @@ export default defineConfig({
   mfsu: {},
   webpack5: {},
   exportStatic: {},
+  // alias: {
+  //   '@': resolve(__dirname, '../src'),
+  //   '@@': resolve(__dirname, '../src/.umi'),
+  // },
+  // lessLoader: {
+  //   additionalData(content, loaderContext) {
+  //     const { resourcePath, rootContext } = loaderContext;
+  //     const relativePath = path.relative(rootContext, resourcePath);
+  //     console.log(relativePath);
+  //     if (relativePath.replace(/\\/g, '/') !== 'src/styles/common/style.less') {
+  //       return '@import "@/styles/common/style.less";' + content;
+  //     }
+  //     return content;
+  //   },
+  // },
   chainWebpack: (config: any, { env }) => {
     config.plugin('monaco-editor').use(MonacoWebpackPlugin, [
       {

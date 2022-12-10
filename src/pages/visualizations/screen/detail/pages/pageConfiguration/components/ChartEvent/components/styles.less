@@ -1,0 +1,104 @@
+/* stylelint-disable declaration-empty-line-before */
+/* stylelint-disable function-no-unknown */
+/* stylelint-disable property-no-unknown */
+/* stylelint-disable selector-class-pattern */
+@import '../../../../../../../../../styles//common//style';
+
+/* 外层也要使用 */
+.func-keyword {
+  color: #b478cf;
+}
+
+.func-annotate {
+  color: #70c0e8;
+}
+
+.ithings-chart-data-monaco-editor {
+  .func-keyNameWord {
+    color: #70c0e8;
+  }
+
+  .tab-tip {
+    font-size: 12px;
+  }
+
+  &.ant-modal > .ant-modal-content,
+  .ant-card,
+  .ant-card-actions {
+    &:extend(.ithings-background-filter);
+  }
+
+  .ant-card {
+    padding: 10px;
+  }
+
+  &.ant-modal > .ant-modal-content .ant-modal-body {
+    padding: 0;
+  }
+}
+
+.ant-layout,
+.ant-layout-content,
+.ant-layout-sider {
+  background-color: transparent;
+}
+
+.collapse-show-box {
+  .ant-card-body {
+    padding-right: 10px;
+    padding-left: 20px;
+  }
+}
+
+ul.ant-card-actions {
+  li:first-child {
+    display: grid;
+    border: 0;
+
+    span {
+      display: flex;
+      align-self: center;
+    }
+  }
+
+  li:last-child {
+    display: grid;
+
+    span {
+      display: flex;
+      align-self: flex-end;
+
+      .save-event-space {
+        justify-content: flex-end;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.say-tag {
+  color: #51d6a9;
+}
+
+.ant-tabs-centered > .ant-tabs-nav .ant-tabs-nav-wrap:not([class*='ant-tabs-nav-wrap-ping']) {
+  justify-content: flex-start;
+
+  .ant-tabs-tab {
+    color: #ffffffd1;
+    background-color: @--filter-color-login-dark;
+
+    &.ant-tabs-tab-active {
+      border-bottom-color: #262626;
+    }
+  }
+}
+
+.react-monaco-editor-container {
+  position: relative;
+  box-sizing: border-box;
+  max-height: 530px;
+  padding: 5px 5px 5px 0;
+  overflow: hidden;
+  background-color: #242424;
+  border-radius: 4px;
+}
