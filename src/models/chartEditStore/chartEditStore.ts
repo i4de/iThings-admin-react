@@ -206,6 +206,8 @@ const chartEditStoreModel = {
     componentList: [],
 
     targetId: undefined,
+
+    baseEvent: {},
   },
   reducers: {
     setEditCanvas(state, { payload }) {
@@ -245,8 +247,6 @@ const chartEditStoreModel = {
 
       // 无 id 清空
       if (!payload?.selectId) {
-        console.log('1');
-
         state.targetChart.selectId = [];
       }
 
@@ -274,6 +274,11 @@ const chartEditStoreModel = {
 
     addComponentList(state, { payload }) {
       state.componentList.push(payload?.componentInstance);
+    },
+
+    // 设置基础事件
+    setBaseEvent(state, { payload }) {
+      state.baseEvent = payload;
     },
 
     // 监听缩放

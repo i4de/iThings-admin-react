@@ -11,6 +11,7 @@ import { templateList } from './importTemplate';
 
 import useRenderTableItem from '@/hooks/useRenderTableItem';
 
+import type { ChangeHandler } from 'react-monaco-editor';
 import '../styles.less';
 
 const { Panel } = Collapse;
@@ -39,7 +40,12 @@ const VariableDescription = () => {
           <Text className="text-typography " color="#51d6a929">
             当前大屏内所有组件的集合id 图表组件中的配置id，可以获取其他图表组件进行控制
           </Text>
-          <MonacoEditor height={'50vh'} value={`{\n  [id]: component\n}`} language={'typescript'} />
+          <MonacoEditor
+            height={'50vh'}
+            value={`{\n  [id]: component\n}`}
+            language={'typescript'}
+            readOnly={true}
+          />
         </Panel>
         <Panel key={'4'} header={'node_modules'}>
           <Text className="text-typography">以下是内置在代码环境中可用的包变量</Text>
@@ -60,7 +66,12 @@ const IntroduceTheCase = () => {
       <Collapse className="ithings-px-3" defaultActiveKey={['1', '2', '3', '4']}>
         {templateList.map((item, index) => (
           <Panel key={index} header={`案例${index + 1}：${item.description}`}>
-            <MonacoEditor height={'50vh'} value={item.code} language={'typescript'} />
+            <MonacoEditor
+              height={'50vh'}
+              value={item.code}
+              language={'typescript'}
+              readOnly={true}
+            />
           </Panel>
         ))}
       </Collapse>
@@ -93,6 +104,10 @@ const ChartEventAdvancedHandle: React.FC = () => {
   const EventLifeTip = {
     [EventLife.VNODE_BEFORE_MOUNT]: '此时组件 DOM 还未存在',
     [EventLife.VNODE_MOUNTED]: '此时组件 DOM 已经存在',
+  };
+
+  const monacoEditorChange: ChangeHandler = (nV, event, eventName) => {
+    advancedEventsRef.current[eventName] = nV;
   };
 
   // 验证语法
@@ -140,15 +155,14 @@ const ChartEventAdvancedHandle: React.FC = () => {
     }
     if (Object.values(advancedEventsRef.current).join('').trim() === '') {
       // 清空事件
-      selectTarget.events.baseEvent = {
+      advancedEventsRef.current = {
         [BaseEvent.ON_CLICK]: undefined,
         [BaseEvent.ON_DBL_CLICK]: undefined,
         [BaseEvent.ON_MOUSE_ENTER]: undefined,
         [BaseEvent.ON_MOUSE_LEAVE]: undefined,
       };
-    } else {
-      selectTarget.events.baseEvent = { ...advancedEventsRef.current };
     }
+
     closeShow();
   };
 
@@ -184,6 +198,7 @@ const ChartEventAdvancedHandle: React.FC = () => {
           height={'480px'}
           value={advancedEventsRef.current?.[eventName]}
           language={'javascript'}
+          onChange={(newValue, event) => monacoEditorChange(newValue, event, eventName)}
         />
         {/*函数结束*/}
         <p className="ithings-pl-3 func-keyNameWord">{`}`}</p>
@@ -195,7 +210,7 @@ const ChartEventAdvancedHandle: React.FC = () => {
   const baseEventContentTab = baseEventContentTabList.map(renderTableItem);
 
   useEffect(() => {
-    if (showModal) advancedEventsRef.current = { ...selectTarget?.events?.advancedEvents };
+    if (showModal) advancedEventsRef.current = { ...advancedEventsRef.current };
   }, [showModal]);
 
   return (
@@ -225,7 +240,8 @@ const ChartEventAdvancedHandle: React.FC = () => {
               <MonacoEditor
                 height="10vh"
                 language="typescript"
-                value={(selectTarget?.events?.advancedEvents || {})[eventName] || ''}
+                value={(advancedEventsRef.current || {})[eventName] || ''}
+                readOnly={true}
               />
             </p>
             <p>

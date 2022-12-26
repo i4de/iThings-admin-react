@@ -10,6 +10,7 @@ import ValidationResult from '../ValidationResult';
 import useRenderTableItem from '@/hooks/useRenderTableItem';
 
 import type { renderTableItemProps } from '@/hooks/useRenderTableItem';
+import type { ChangeHandler } from 'react-monaco-editor';
 
 import '../styles.less';
 
@@ -37,7 +38,7 @@ const ChartEventBaseHandle: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   // events 函数模板
   const baseEventRef = useRef<renderTableItemProps[]>({ ...selectTarget?.events?.baseEvent });
-  console.log(baseEventRef);
+
   // 事件错误标识
   const errorFlagRef = useRef(false);
 
@@ -85,6 +86,10 @@ const ChartEventBaseHandle: React.FC = () => {
     [BaseEvent.ON_MOUSE_LEAVE]: '鼠标移出',
   };
 
+  const monacoEditorChange: ChangeHandler = (nV, event, eventName) => {
+    baseEventRef.current[eventName] = nV;
+  };
+
   const baseEventSiderTabList = [
     {
       key: '1',
@@ -113,6 +118,7 @@ const ChartEventBaseHandle: React.FC = () => {
           height={'480px'}
           value={baseEventRef.current?.[eventName]}
           language={'javascript'}
+          onChange={(newValue, event) => monacoEditorChange(newValue, event, eventName)}
         />
         {/*函数结束*/}
         <p className="ithings-pl-3 func-keyNameWord">{`}`}</p>
@@ -134,22 +140,19 @@ const ChartEventBaseHandle: React.FC = () => {
     }
     if (Object.values(baseEventRef.current).join('').trim() === '') {
       // 清空事件
-      selectTarget.events.baseEvent = {
+      const curBaseEvent = {
         [BaseEvent.ON_CLICK]: undefined,
         [BaseEvent.ON_DBL_CLICK]: undefined,
         [BaseEvent.ON_MOUSE_ENTER]: undefined,
         [BaseEvent.ON_MOUSE_LEAVE]: undefined,
       };
-    } else {
-      selectTarget.events.baseEvent = { ...baseEventRef.current };
+      baseEventRef.current = curBaseEvent;
     }
     closeShow();
   };
 
-  console.log(Object.keys(BaseEvent));
-
   useEffect(() => {
-    if (showModal) baseEventRef.current = { ...selectTarget?.events?.baseEvent };
+    if (showModal) baseEventRef.current = { ...baseEventRef.current };
   }, [showModal]);
 
   // TODO: 封装一个code组件，仅仅用来展示code
@@ -180,7 +183,8 @@ const ChartEventBaseHandle: React.FC = () => {
               <MonacoEditor
                 height="10vh"
                 language="typescript"
-                value={(selectTarget?.events?.baseEvent || {})[eventName] || ''}
+                value={(baseEventRef.current || {})[eventName] || ''}
+                readOnly={true}
               />
             </p>
             <p>
