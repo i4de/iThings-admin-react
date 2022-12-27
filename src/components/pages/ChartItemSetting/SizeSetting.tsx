@@ -27,6 +27,7 @@ const SizeSetting: React.FC = () => {
         size="small"
         prefix={'宽度'}
         onChange={(value) => handleChange(value, 'w')}
+        className="radius set-input-width"
       />
       <InputNumber
         value={selectTarget?.attr.h}
@@ -36,6 +37,7 @@ const SizeSetting: React.FC = () => {
         size="small"
         prefix={'高度'}
         onChange={(value) => handleChange(value, 'h')}
+        className="radius set-input-width"
       />
     </SettingItemBox>
   );

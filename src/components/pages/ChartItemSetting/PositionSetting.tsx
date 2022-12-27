@@ -13,7 +13,7 @@ const PositionSetting: React.FC = () => {
   const positionList = [
     {
       key: 'AlignHorizontalLeftIcon',
-      lable: '局左',
+      lable: '居左',
       icon: <PicLeftOutlined />,
     },
     {
@@ -23,7 +23,7 @@ const PositionSetting: React.FC = () => {
     },
     {
       key: 'AlignHorizontalRightIcon',
-      lable: '局右',
+      lable: '居右',
       icon: <PicLeftOutlined />,
     },
     {
@@ -122,10 +122,14 @@ const PositionSetting: React.FC = () => {
   return (
     <>
       <Divider style={{ margin: '10px 0' }} />
-      <Space align="end" style={{ margin: '10px 0' }}>
+      <Space align="center" style={{ margin: '10px 0' }} size={27}>
         {positionList.map((item) => (
           <Tooltip title={item.lable} key={item.key}>
-            <Button icon={item.icon} onClick={() => positonHandle(item.key)} />
+            <Button
+              icon={item.icon}
+              onClick={() => positonHandle(item.key)}
+              className="clear-btn"
+            />
           </Tooltip>
         ))}
       </Space>
@@ -137,6 +141,7 @@ const PositionSetting: React.FC = () => {
           size="small"
           prefix="上"
           onChange={(value) => handleInputNumberChange(value, 'y')}
+          className="radius set-input-width"
         />
         <InputNumber
           value={selectTarget?.attr.x}
@@ -145,6 +150,7 @@ const PositionSetting: React.FC = () => {
           size="small"
           prefix="左"
           onChange={(value) => handleInputNumberChange(value, 'x')}
+          className="radius set-input-width"
         />
       </SettingItemBox>
     </>

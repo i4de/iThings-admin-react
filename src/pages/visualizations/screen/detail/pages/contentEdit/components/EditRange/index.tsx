@@ -11,6 +11,8 @@ const EditRange: React.FC = () => {
 
   const { componentList, editCanvasConfig } = useSelector((state) => state.chartEditStore);
 
+  console.log(componentList);
+
   // 背景
   const rangeStyle = useMemo(() => {
     // 设置背景色和图片背景
@@ -29,7 +31,7 @@ const EditRange: React.FC = () => {
       width: 'inherit',
       height: 'inherit',
     };
-  }, []);
+  }, [editCanvasConfig]);
 
   return (
     <div

@@ -19,6 +19,8 @@ import StylesSetting from './StylesSetting';
 
 import './styles.less';
 
+import '@/pages/visualizations/screen/detail/pages/pageConfiguration/styles.less';
+
 export {
   StylesSetting,
   NameSetting,

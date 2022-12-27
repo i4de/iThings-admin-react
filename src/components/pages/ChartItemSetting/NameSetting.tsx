@@ -36,6 +36,7 @@ const NameSetting: React.FC = () => {
           value={selectTarget.chartConfig.title}
           onBlur={handleBlur}
           onChange={handleChange}
+          className="radius set-background-border"
         />
       </div>
     </SettingItemBox>

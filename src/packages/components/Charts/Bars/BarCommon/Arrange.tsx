@@ -8,6 +8,8 @@ import React, { useMemo, useState } from 'react';
 import ReactGPicker from 'react-gcolor-picker';
 import { useDispatch } from 'umi';
 
+import '@/pages/visualizations/screen/detail/pages/pageConfiguration/styles.less';
+
 const { Text } = Typography;
 
 const Arrange: React.FC = () => {
@@ -47,92 +49,90 @@ const Arrange: React.FC = () => {
       {seriesList.map((item, index) => (
         <CollapseItem name={`柱状图-${index + 1}`} expanded={true} key={index}>
           <SettingItemBox name="图形">
-            <div slot="default">
-              <SettingItem name="宽度">
-                <InputNumber
-                  value={item.barWidth}
-                  min={1}
-                  max={100}
-                  onChange={(value) => handleInputChange(value, item, 'barWidth')}
-                  size="small"
-                  placeholder="自动计算"
-                />
-              </SettingItem>
-              <SettingItem name="圆角">
-                <InputNumber
-                  value={item.itemStyle.borderRadius}
-                  min={0}
-                  onChange={(value) => handleInputChange(value, item.itemStyle, 'borderRadius')}
-                  size="small"
-                  placeholder="自动计算"
-                />
-              </SettingItem>
-            </div>
+            <SettingItem name="宽度">
+              <InputNumber
+                value={item.barWidth}
+                min={1}
+                max={100}
+                onChange={(value) => handleInputChange(value, item, 'barWidth')}
+                size="small"
+                placeholder="自动计算"
+                className="radius set-input-width"
+              />
+            </SettingItem>
+            <SettingItem name="圆角">
+              <InputNumber
+                value={item.itemStyle.borderRadius}
+                min={0}
+                onChange={(value) => handleInputChange(value, item.itemStyle, 'borderRadius')}
+                size="small"
+                placeholder="自动计算"
+                className="radius set-input-width"
+              />
+            </SettingItem>
           </SettingItemBox>
           <SettingItemBox name="标签">
-            <div slot="default">
-              <SettingItem name="展示">
-                <Space>
-                  <Switch
-                    checked={item.label.show}
-                    size="small"
-                    onChange={(value) => handleInputChange(value, item.label, 'show')}
-                  />
-                  <Text>展示标签</Text>
-                </Space>
-              </SettingItem>
-              <SettingItem name="大小">
-                <InputNumber
-                  value={item.label.fontSize}
-                  min={1}
-                  onChange={(value) => handleInputChange(value, item.label, 'fontSize')}
+            <SettingItem name="展示">
+              <Space>
+                <Switch
+                  checked={item.label.show}
                   size="small"
+                  onChange={(value) => handleInputChange(value, item.label, 'show')}
                 />
-              </SettingItem>
-              <SettingItem name="颜色">
-                <div className="color-pick radius">
-                  <Popover
-                    content={
-                      <div className="color-set">
-                        {isShowColor && (
-                          <ReactGPicker
-                            value={item.label.color}
-                            format="hex"
-                            onChange={handleInputChange}
-                          />
-                        )}
-                      </div>
-                    }
-                    trigger="click"
-                    placement="bottom"
-                  >
-                    <div
-                      className="picker-height radius"
-                      onClick={chromeColorHandle}
-                      style={{ backgroundColor: item.label.color }}
-                    >
-                      {item.label.color || '#000'}
+                <Text>展示标签</Text>
+              </Space>
+            </SettingItem>
+            <SettingItem name="大小">
+              <InputNumber
+                value={item.label.fontSize}
+                min={1}
+                onChange={(value) => handleInputChange(value, item.label, 'fontSize')}
+                size="small"
+                className="radius set-input-width"
+              />
+            </SettingItem>
+            <SettingItem name="颜色">
+              <div className="color-pick radius">
+                <Popover
+                  content={
+                    <div className="color-set">
+                      {isShowColor && (
+                        <ReactGPicker
+                          value={item.label.color}
+                          format="hex"
+                          onChange={handleInputChange}
+                        />
+                      )}
                     </div>
-                  </Popover>
-                </div>
-              </SettingItem>
-              <SettingItem name="位置">
-                <Select
-                  size="small"
-                  className="color-select"
-                  style={{ width: '263px' }}
-                  value={item.label.position}
-                  onChange={(value) => handleInputChange(value, item.label, 'position')}
-                  options={[
-                    { label: 'top', value: 'top' },
-                    { label: 'left', value: 'left' },
-                    { label: 'right', value: 'right' },
-                    { label: 'bottom', value: 'bottom' },
-                  ]}
-                  popupClassName="select-option"
-                />
-              </SettingItem>
-            </div>
+                  }
+                  trigger="click"
+                  placement="bottom"
+                >
+                  <div
+                    className="picker-height radius"
+                    onClick={chromeColorHandle}
+                    style={{ backgroundColor: item.label.color }}
+                  >
+                    {item.label.color || '#000'}
+                  </div>
+                </Popover>
+              </div>
+            </SettingItem>
+            <SettingItem name="位置">
+              <Select
+                size="small"
+                className="color-select set-input-width"
+                value={item.label.position}
+                onChange={(value) => handleInputChange(value, item.label, 'position')}
+                options={[
+                  { label: 'top', value: 'top' },
+                  { label: 'left', value: 'left' },
+                  { label: 'right', value: 'right' },
+                  { label: 'bottom', value: 'bottom' },
+                ]}
+                popupClassName="select-option"
+              />
+            </SettingItem>
           </SettingItemBox>
         </CollapseItem>
       ))}

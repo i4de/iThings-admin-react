@@ -60,20 +60,30 @@
 /* 正常背景色和边框色 */
 
 .ant-input-number,
+.ant-input,
+.ant-input-number-affix-wrapper,
 .ant-select:not(.ant-select-customize-input) .ant-select-selector,
 .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector,
 .ant-btn.clear-btn,
-.ant-btn.preview-btn {
+.ant-btn.clear-btn:hover,
+.ant-btn.preview-btn,
+.set-background-border {
   background-color: @backgroundColorStyle;
   border-color: @backgroundColorStyle;
 }
 
+/*  覆盖色 */
+.ant-input {
+  background-color: #3a3a3a;
+}
+
 /* 禁用时字体颜色 */
 
-.ant-select-disabled.ant-select:not(.ant-select-customize-input)
-  .ant-select-selector
-  .ant-select-selection-item,
-.ant-btn.clear-btn[disabled] > span {
+.ant-select-disabled.ant-select:not(.ant-select-customize-input),
+.ant-select-selector,
+.ant-select-selection-item,
+.ant-btn.clear-btn[disabled] > span,
+.ant-input-number-prefix {
   color: #757576;
 }
 
@@ -104,7 +114,8 @@
 }
 
 /* 正常字体色 */
-
+.ant-input-show-count-suffix,
+.ant-input,
 .ant-select-selection-item,
 .ant-input-number-input-wrap,
 .ant-btn.clear-btn > span {
@@ -153,4 +164,16 @@
 
 .ant-divider {
   background-color: @dividerStyle;
+}
+
+/* 清除按钮 */
+.ant-input-clear-icon,
+.ant-select-arrow {
+  color: #ccc;
+}
+
+/* 设置带前缀的inputnumber宽度 */
+
+.set-input-width {
+  width: 125px;
 }

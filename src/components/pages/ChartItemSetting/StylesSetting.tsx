@@ -57,6 +57,8 @@ const StylesSetting: React.FC<{
     });
   };
 
+  console.log(editCanvasConfig.rotateZ);
+
   return (
     <>
       {selectTarget?.isGroup && (
@@ -150,7 +152,7 @@ const StylesSetting: React.FC<{
             {/*混合模式*/}
             <SettingItemBox alone={true}>
               <div slot="name">
-                <Text>混合</Text>
+                <Text style={{ color: '#ffffffd1' }}>混合</Text>
                 <Tooltip title="视频组件需要底色透明一般选中滤色">
                   <QuestionCircleOutlined style={{ marginLeft: '5px' }} />
                 </Tooltip>
@@ -159,8 +161,9 @@ const StylesSetting: React.FC<{
                 <SettingItem>
                   <Select
                     showSearch
-                    className="color-select"
-                    style={{ width: '100%' }}
+                    size="small"
+                    className="color-select set-input-width"
+                    style={{ width: '101%' }}
                     value={editCanvasConfig.blendMode}
                     onChange={selectHandle}
                     options={BlendModeEnumList}
@@ -174,27 +177,33 @@ const StylesSetting: React.FC<{
                 <InputNumber
                   min={1}
                   max={360}
+                  size="small"
                   value={editCanvasConfig.rotateZ}
                   onChange={(v) => changeHandle(v, FilterEnum.ROTATE_Z)}
                   placeholder="角度"
+                  className="radius set-input-width"
                 />
               </SettingItem>
               <SettingItem name="X轴 - 旋转">
                 <InputNumber
                   min={1}
                   max={360}
+                  size="small"
                   value={editCanvasConfig.rotateX}
                   onChange={(v) => changeHandle(v, FilterEnum.ROTATE_X)}
                   placeholder="角度"
+                  className="radius set-input-width"
                 />
               </SettingItem>
               <SettingItem name="Y轴 - 旋转">
                 <InputNumber
                   min={1}
                   max={360}
+                  size="small"
                   value={editCanvasConfig.rotateY}
                   onChange={(v) => changeHandle(v, FilterEnum.ROTATE_Y)}
                   placeholder="角度"
+                  className="radius set-input-width"
                 />
               </SettingItem>
             </SettingItemBox>
@@ -204,18 +213,22 @@ const StylesSetting: React.FC<{
                 <InputNumber
                   min={1}
                   max={360}
+                  size="small"
                   value={editCanvasConfig.skewX}
                   onChange={(v) => changeHandle(v, FilterEnum.SKEW_X)}
                   placeholder="角度"
+                  className="radius set-input-width"
                 />
               </SettingItem>
               <SettingItem name="Y轴 - 倾斜">
                 <InputNumber
                   min={1}
                   max={360}
+                  size="small"
                   value={editCanvasConfig.skewY}
                   onChange={(v) => changeHandle(v, FilterEnum.SKEW_Y)}
                   placeholder="角度"
+                  className="radius set-input-width"
                 />
               </SettingItem>
             </SettingItemBox>

@@ -8,6 +8,8 @@ import Arrange from '@/packages/components/Charts/Bars/BarCommon/Arrange';
 import { Divider } from 'antd';
 import React from 'react';
 
+import '../../styles.less';
+
 const ChartSetting: React.FC = () => {
   return (
     <div className="go-chart-configurations-setting">
