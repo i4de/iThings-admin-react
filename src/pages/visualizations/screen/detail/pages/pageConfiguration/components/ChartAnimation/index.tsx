@@ -29,7 +29,7 @@ const ChartAnimation: React.FC = () => {
       {selectTarget && (
         <div className="ithings-chart-configurations-animations">
           <Button
-            className="clear-btn"
+            className="clear-btn ithings-my-2"
             disabled={!selectTarget.styles.animations.length}
             onClick={clearAnimation}
           >
@@ -50,7 +50,7 @@ const ChartAnimation: React.FC = () => {
                           : '',
                       ],
                       'animation-item',
-                      'go-transition-quick',
+                      'ithings-transition-quick',
                     )}
                     onMouseOver={() => sethoverPreviewAnimate(childrenItem.value)}
                     onClick={() => addAnimation(childrenItem)}
